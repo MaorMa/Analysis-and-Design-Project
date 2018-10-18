@@ -6,6 +6,10 @@ package Controller;
 import java.sql.*;
 
 public class DBconnection {
+    /**
+     *
+     * @return
+     */
     private Connection connect() {
         Connection c = null;
         try {
