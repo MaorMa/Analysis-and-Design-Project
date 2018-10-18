@@ -10,59 +10,62 @@ public class DBconnection {
      *
      * @return
      */
-    private Connection connect() {
-        Connection c = null;
+    Connection conn = null;
+
+    private void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:users.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:users.db");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         System.out.println("Connection established successfully");
-        return c;
-
     }
 
-    public static void createNewTable() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:users.db";
-
+    public void createNewTable(String tableName, String cols) {
         // SQL statement for creating a new table
-        String sql = "CREATE TABLE IF NOT EXISTS users (\n"
-                + "	id integer PRIMARY KEY,\n"
-                + "	name text NOT NULL,\n"
-                + "	capacity real\n"
-                + ");";
+        String newTable = "CREATE TABLE IF NOT EXISTS " + tableName + "(\n" + cols + ");";
 
-        try (Connection conn = DriverManager.getConnection(url);
-             Statement stmt = conn.createStatement()) {
+        try (Statement stmt = conn.createStatement()) {
             // create a new table
-            stmt.execute(sql);
+            stmt.execute(newTable);
+                System.out.println("Table Created");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
     public void insert(String name, double capacity) {
-        String sql = "INSERT INTO users(name,capacity) VALUES(?,?)";
+        String insertQ = "INSERT INTO users(name,capacity) VALUES(?,?)";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, name);
             pstmt.setDouble(2, capacity);
             pstmt.executeUpdate();
+                System.out.println("Insert Complete");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void selectAll(){
-        String sql = "SELECT id, name, capacity FROM users";
+    public void removeRow(String tableName, String key) {
+        String removeQ = "DELETE FROM " + tableName + "\n" +
+                "WHERE name='" + key + "';";
 
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+        try (PreparedStatement pstmt = conn.prepareStatement(removeQ)) {
+            pstmt.execute();
+                System.out.println("Delete Complete");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectAll(){
+        String selectQ = "SELECT id, name, capacity FROM users";
+
+        try (Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(selectQ)){
 
             // loop through the result set
             while (rs.next()) {
@@ -76,9 +79,11 @@ public class DBconnection {
     }
 
     public static void main(String[] args) {
-        DBconnection d=new DBconnection();
-        d.createNewTable();
-        d.insert("Raw Materials", 3000);
-        d.selectAll();
+        DBconnection db=new DBconnection();
+        db.connect(); //create global connection
+        db.createNewTable("users", "id integer PRIMARY KEY, name text NOT NULL, capacity real");
+        db.insert("Raw", 3000);
+        db.removeRow("users","Raw");
+        db.selectAll();
     }
 }
