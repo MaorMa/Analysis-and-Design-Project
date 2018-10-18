@@ -1,4 +1,4 @@
-package sample;
+package Controller;
 
 /**
  * Created by Maor on 10/17/2018.
