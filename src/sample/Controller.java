@@ -1,5 +1,7 @@
 package sample;
 
 public class Controller {
-    //hello
+    public void CreateUser(){
+
+    }
 }
