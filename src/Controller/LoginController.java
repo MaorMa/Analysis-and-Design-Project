@@ -13,7 +13,7 @@ public class LoginController {
         fxmlLoader.setLocation(getClass().getResource("../View/Home.fxml"));
         Scene scene=null;
         try{
-         scene=new Scene(fxmlLoader.load(), 500, 350);
+         scene=new Scene(fxmlLoader.load(), 600, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }
