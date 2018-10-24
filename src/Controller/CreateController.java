@@ -1,8 +1,10 @@
 package Controller;
 
 import Model.Model;
+import javafx.embed.swing.JFXPanel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import java.time.format.DateTimeFormatter;
 
@@ -20,13 +22,20 @@ public class CreateController {
     public javafx.scene.control.DatePicker date;
     public javafx.scene.control.TextField city;
 
+    public javafx.scene.control.Button createUserButton;
+
     public void createUser(){
         mymodel = new Model();
         String username_to_string = username.getText();
         String password_to_string = password.getText();
         String fname_to_string = fname.getText();
         String lname_to_string = lname.getText();
-        String date_to_string = date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));//problem when is empty!
+        String date_to_string;
+        if(date.getValue() != null)//check if date is null
+            date_to_string = date.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));//problem when empty!
+        else
+            date_to_string = "";//if date is null - set to empty
+        System.out.println(date_to_string);
         String city_to_string = city.getText();
         if(username_to_string.isEmpty() || password_to_string.isEmpty() || fname_to_string.isEmpty() ||
                 lname_to_string.isEmpty() || date_to_string.isEmpty() || city_to_string.isEmpty()){
@@ -38,8 +47,12 @@ public class CreateController {
             alert.showAndWait();
         }
         else {
-            mymodel.insert_form(username_to_string, password_to_string, fname_to_string, lname_to_string
+            Boolean added = mymodel.insert_form(username_to_string, password_to_string, fname_to_string, lname_to_string
                     , date_to_string, city_to_string);
+            if(added) {
+                Stage stage = (Stage) createUserButton.getScene().getWindow();
+                stage.close();
+            }
         }
     }
 }
