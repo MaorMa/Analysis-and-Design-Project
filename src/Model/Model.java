@@ -9,7 +9,6 @@ import javafx.scene.control.*;
  */
 public class Model {
     private DBconnection dBconnection;
-    private CreateController create;
     public Model(){
         dBconnection = new DBconnection();
     }
@@ -35,5 +34,9 @@ public class Model {
             alert.showAndWait();
             return true;
         }
+    }
+
+    public boolean checkValidUser(String userName, String pw){
+        return true;
     }
 }

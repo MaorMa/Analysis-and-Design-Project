@@ -37,7 +37,7 @@
             <RowConstraints maxHeight="128.33331044514972" minHeight="2.0" prefHeight="49.33336893717447" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" />
+            <TextField fx:id="username" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" />
             <Label text="Username:" textFill="WHITE" GridPane.halignment="LEFT">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -52,7 +52,7 @@
                   <Cursor fx:constant="NONE" />
                </cursor>
             </Button>
-            <PasswordField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </center>

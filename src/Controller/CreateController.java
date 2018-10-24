@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * Created by Maor on 10/24/2018.
  */
 public class CreateController {
-    Model mymodel;
+    private Model mymodel;
 
     @FXML
     public javafx.scene.control.TextField username;
