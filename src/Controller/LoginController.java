@@ -33,7 +33,7 @@ public class LoginController {
             e.printStackTrace();
         }
         Stage stage=new Stage();
-        stage.setTitle("CreateUser");
+        stage.setTitle("Create User");
         stage.setScene(scene);
         stage.show();
     }

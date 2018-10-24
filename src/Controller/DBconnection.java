@@ -38,13 +38,13 @@ public class DBconnection {
                 ");";
         try (PreparedStatement pstmt = conn.prepareStatement(createQuary)) {
             pstmt.executeUpdate();
-            System.out.println("UsersCrated Complete");
+            System.out.println("UsersCreated Complete");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void insertUser(User user) {
+    public boolean insertUser(User user) {
         String insertQ = "INSERT INTO Users(UserName,Password,BDate,FName,LName,City) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, user.getUsername());
@@ -55,8 +55,10 @@ public class DBconnection {
             pstmt.setString(6, user.getCity());
             pstmt.executeUpdate();
                 System.out.println("Insert Complete");
+                return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
