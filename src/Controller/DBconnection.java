@@ -3,6 +3,8 @@ package Controller;
 /**
  * Created by Maor on 10/17/2018.
  */
+import Model.User;
+
 import java.sql.*;
 
 public class DBconnection {
@@ -15,7 +17,7 @@ public class DBconnection {
     private void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:res/users.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:res/Users.db");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -23,25 +25,15 @@ public class DBconnection {
         System.out.println("Connection established successfully");
     }
 
-    public void createNewTable(String tableName, String cols) {
-        // SQL statement for creating a new table
-        String newTable = "CREATE TABLE IF NOT EXISTS " + tableName + "(\n" + cols + ");";
-
-        try (Statement stmt = conn.createStatement()) {
-            // create a new table
-            stmt.execute(newTable);
-                System.out.println("Table Created");
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void insert(String name, double capacity) {
-        String insertQ = "INSERT INTO users(name,capacity) VALUES(?,?)";
-
+    public void insertUser(User user) {
+        String insertQ = "INSERT INTO Users(UserName,Password,BDate,FName,LName,City) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            pstmt.setString(1, name);
-            pstmt.setDouble(2, capacity);
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setDate(3, user.getBdate());
+            pstmt.setString(4, user.getFirst_name());
+            pstmt.setString(5, user.getLast_name());
+            pstmt.setString(6, user.getCity());
             pstmt.executeUpdate();
                 System.out.println("Insert Complete");
         } catch (SQLException e) {
@@ -49,9 +41,27 @@ public class DBconnection {
         }
     }
 
-    public void removeRow(String tableName, String key) {
-        String removeQ = "DELETE FROM " + tableName + "\n" +
-                "WHERE name='" + key + "';";
+    public void updateUser(User newUser, User oldUser) {
+        /*String insertQ = "UPDATE Users\n SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n WHERE UserName=\"+"+oldUser.getUsername()+"\"\n"+
+                "VALUES(?,?,?,?,?,?)";*/
+        String insertQ = "UPDATE Users\n SET Password='444'\n WHERE UserName=\"+"+oldUser.getUsername()+"\"\n";//+"VALUES(?,?,?,?,?,?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
+            /*pstmt.setString(1, newUser.getUsername());
+            pstmt.setString(2, newUser.getPassword());
+            pstmt.setDate(3, newUser.getBdate());
+            pstmt.setString(4, newUser.getFirst_name());
+            pstmt.setString(5, newUser.getLast_name());
+            pstmt.setString(6, newUser.getCity());*/
+            pstmt.executeUpdate();
+            System.out.println("Update Complete");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void removeUser(User user) {
+        String removeQ = "DELETE FROM Users\n" +
+                "WHERE UserName='" + user.getUsername() + "';";
 
         try (PreparedStatement pstmt = conn.prepareStatement(removeQ)) {
             pstmt.execute();
@@ -61,17 +71,19 @@ public class DBconnection {
         }
     }
 
-    public void selectAll(){
-        String selectQ = "SELECT id, name, capacity FROM users";
+    public void readUser(String userName){
+        String selectQ = "SELECT * FROM Users WHERE UserName="+"\""+userName+"\"";
 
         try (Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(selectQ)){
 
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getInt("id") +  "\t" +
-                        rs.getString("name") + "\t" +
-                        rs.getDouble("capacity"));
+                System.out.println(rs.getString("id") +  "\t"+
+                        rs.getDate("BDate")+"\t"+
+                        rs.getString("FName")+"\t"+
+                        rs.getString("LName")+"\t"+
+                        rs.getString("City"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -81,9 +93,7 @@ public class DBconnection {
     public static void main(String[] args) {
         DBconnection db=new DBconnection();
         db.connect(); //create global connection
-        //db.createNewTable("users", "id integer PRIMARY KEY, name text NOT NULL, capacity real");
-        //db.insert("Raw", 3000);
-        //db.removeRow("users","Raw");
-        //db.selectAll();
+        db.updateUser(new User("a", "123", new Date(1990,11,04), "a","c", "a"),
+                new User("aviv", "123", new Date(1990,11,04), "a","c", "a"));
     }
 }

@@ -1,12 +1,14 @@
 package Model;
 
+import java.sql.Date;
+
 /**
  * Created by Maor on 10/24/2018.
  */
 public class User {
     private String username;
     private String password;
-    private String bdate;
+    private Date bdate;
     private String fName;
     private String lName;
     private String city;
@@ -14,12 +16,12 @@ public class User {
     /**
      C'tor
      */
-    public User(String username, String password, String bdate, String first_name, String family_name, String city) {
+    public User(String username, String password, Date bdate, String first_name, String last_name, String city) {
         this.username = username;
         this.password = password;
         this.bdate = bdate;
         this.fName = first_name;
-        this.lName = family_name;
+        this.lName = last_name;
         this.city = city;
     }
 
@@ -39,11 +41,11 @@ public class User {
         this.password = password;
     }
 
-    public String getBdate() {
+    public Date getBdate() {
         return bdate;
     }
 
-    public void setBdate(String bdate) {
+    public void setBdate(Date bdate) {
         this.bdate = bdate;
     }
 
@@ -55,11 +57,11 @@ public class User {
         this.fName = first_name;
     }
 
-    public String getFamily_name() {
+    public String getLast_name() {
         return lName;
     }
 
-    public void setFamily_name(String family_name) {
+    public void setLast_name(String family_name) {
         this.lName = family_name;
     }
 
