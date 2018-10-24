@@ -7,6 +7,7 @@ import Model.User;
 
 import java.sql.*;
 
+//todo check db file
 public class DBconnection {
     /**
      *
