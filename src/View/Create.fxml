@@ -60,7 +60,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="createUser" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="59.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="createUser" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="59.0" text="Create" GridPane.halignment="CENTER" onAction="#createUser" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </bottom>
