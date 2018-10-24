@@ -22,6 +22,5 @@ public class Main extends Application {
     public static void main(String[] args)
     {
         launch(args);
-        Model my_model = new Model();
     }
 }
