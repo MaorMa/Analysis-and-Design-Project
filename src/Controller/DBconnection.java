@@ -30,7 +30,7 @@ public class DBconnection {
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
-            pstmt.setDate(3, user.getBdate());
+            pstmt.setString(3, user.getBdate());
             pstmt.setString(4, user.getFirst_name());
             pstmt.setString(5, user.getLast_name());
             pstmt.setString(6, user.getCity());
@@ -44,14 +44,14 @@ public class DBconnection {
     public void updateUser(User newUser, User oldUser) {
         /*String insertQ = "UPDATE Users\n SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n WHERE UserName=\"+"+oldUser.getUsername()+"\"\n"+
                 "VALUES(?,?,?,?,?,?)";*/
-        String insertQ = "UPDATE Users\n SET Password='444'\n WHERE UserName=\"+"+oldUser.getUsername()+"\"\n";//+"VALUES(?,?,?,?,?,?)";
+        String insertQ = "UPDATE Users\n SET Password='444'\n WHERE UserName=\""+oldUser.getUsername()+"\"\n";//+"VALUES(?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            /*pstmt.setString(1, newUser.getUsername());
+            pstmt.setString(1, newUser.getUsername());
             pstmt.setString(2, newUser.getPassword());
-            pstmt.setDate(3, newUser.getBdate());
+            pstmt.setString(3, newUser.getBdate());
             pstmt.setString(4, newUser.getFirst_name());
             pstmt.setString(5, newUser.getLast_name());
-            pstmt.setString(6, newUser.getCity());*/
+            pstmt.setString(6, newUser.getCity());
             pstmt.executeUpdate();
             System.out.println("Update Complete");
         } catch (SQLException e) {
@@ -80,7 +80,7 @@ public class DBconnection {
             // loop through the result set
             while (rs.next()) {
                 System.out.println(rs.getString("id") +  "\t"+
-                        rs.getDate("BDate")+"\t"+
+                        rs.getString("BDate")+"\t"+
                         rs.getString("FName")+"\t"+
                         rs.getString("LName")+"\t"+
                         rs.getString("City"));
@@ -93,7 +93,8 @@ public class DBconnection {
     public static void main(String[] args) {
         DBconnection db=new DBconnection();
         db.connect(); //create global connection
-        db.updateUser(new User("a", "123", new Date(1990,11,04), "a","c", "a"),
-                new User("aviv", "123", new Date(1990,11,04), "a","c", "a"));
+        db.insertUser(new User("saarm", "123", "04/11/90", "a","c", "a"));
+        db.updateUser(new User("a", "123", "04/11/90", "a","c", "a"),
+                new User("aviv", "123", "04/11/90", "a","c", "a"));
     }
 }
