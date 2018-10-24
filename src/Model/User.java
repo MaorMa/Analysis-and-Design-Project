@@ -48,19 +48,19 @@ public class User {
     }
 
     public String getFirst_name() {
-        return first_name;
+        return fName;
     }
 
     public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+        this.fName = first_name;
     }
 
     public String getFamily_name() {
-        return family_name;
+        return lName;
     }
 
     public void setFamily_name(String family_name) {
-        this.family_name = family_name;
+        this.lName = family_name;
     }
 
     public String getCity() {
