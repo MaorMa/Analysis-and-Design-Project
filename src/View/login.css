@@ -14,7 +14,7 @@
  -fx-background-radius: 20;
 }
 
-#create:hover{
+#create:hover,#login:hover{
       -fx-border-color: #c54810;
       -fx-background-color: #119cdf;
       -fx-background-insets: 0 0 -1 0, 0, 1, 2;
