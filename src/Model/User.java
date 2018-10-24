@@ -8,7 +8,7 @@ import java.sql.Date;
 public class User {
     private String username;
     private String password;
-    private Date bdate;
+    private String bdate;
     private String fName;
     private String lName;
     private String city;
@@ -16,7 +16,7 @@ public class User {
     /**
      C'tor
      */
-    public User(String username, String password, Date bdate, String first_name, String last_name, String city) {
+    public User(String username, String password, String bdate, String first_name, String last_name, String city) {
         this.username = username;
         this.password = password;
         this.bdate = bdate;
@@ -41,11 +41,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getBdate() {
+    public String getBdate() {
         return bdate;
     }
 
-    public void setBdate(Date bdate) {
+    public void setBdate(String bdate) {
         this.bdate = bdate;
     }
 

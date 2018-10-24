@@ -46,8 +46,8 @@
                <font>
                   <Font name="System Bold" size="14.0" />
                </font></Label>
-            <Button alignment="CENTER" maxHeight="30.0" maxWidth="70.0" mnemonicParsing="false" onAction="#CreateUser" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="30.0" maxWidth="70.0" mnemonicParsing="false" text="CREATE" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+            <Button alignment="CENTER" maxHeight="30.0" maxWidth="70.0" mnemonicParsing="false" onAction="#CheckifValid" text="Login" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="30.0" maxWidth="70.0" mnemonicParsing="false" onAction="#CreateUser" text="CREATE" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                <cursor>
                   <Cursor fx:constant="NONE" />
                </cursor>
