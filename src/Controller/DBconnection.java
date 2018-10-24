@@ -14,7 +14,7 @@ public class DBconnection {
      */
     Connection conn = null;
 
-    private void connect() {
+    public DBconnection() {
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:res/Users.db");
@@ -41,10 +41,10 @@ public class DBconnection {
         }
     }
 
-    public void updateUser(User newUser, User oldUser) {
-        /*String insertQ = "UPDATE Users\n SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n WHERE UserName=\"+"+oldUser.getUsername()+"\"\n"+
-                "VALUES(?,?,?,?,?,?)";*/
-        String insertQ = "UPDATE Users\n SET Password='444'\n WHERE UserName=\""+oldUser.getUsername()+"\"\n";//+"VALUES(?,?,?,?,?,?)";
+    public void updateUser(User oldUser, User newUser) {
+        String insertQ = "UPDATE Users\n " +
+                "SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n " +
+                "WHERE UserName='"+oldUser.getUsername()+"'";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, newUser.getUsername());
             pstmt.setString(2, newUser.getPassword());
@@ -92,9 +92,8 @@ public class DBconnection {
 
     public static void main(String[] args) {
         DBconnection db=new DBconnection();
-        db.connect(); //create global connection
         db.insertUser(new User("saarm", "123", "04/11/90", "a","c", "a"));
-        db.updateUser(new User("a", "123", "04/11/90", "a","c", "a"),
+        db.updateUser(new User("saarm", null,null,null,null,null),
                 new User("aviv", "123", "04/11/90", "a","c", "a"));
     }
 }
