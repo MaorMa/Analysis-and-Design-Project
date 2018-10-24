@@ -18,11 +18,30 @@ public class DBconnection {
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:res/Users.db");
+            createTables();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         System.out.println("Connection established successfully");
+    }
+
+    private void createTables(){
+        String createQuary = "CREATE TABLE IF NOT EXISTS `Users` (\n" +
+                "\t`UserName`\tTEXT NOT NULL,\n" +
+                "\t`Password`\ttext NOT NULL,\n" +
+                "\t`BDate`\tNUMERIC NOT NULL,\n" +
+                "\t`FName`\tTEXT NOT NULL,\n" +
+                "\t`LName`\tTEXT NOT NULL,\n" +
+                "\t`City`\tTEXT NOT NULL,\n" +
+                "\tPRIMARY KEY(`UserName`)\n" +
+                ");";
+        try (PreparedStatement pstmt = conn.prepareStatement(createQuary)) {
+            pstmt.executeUpdate();
+            System.out.println("UsersCrated Complete");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void insertUser(User user) {
