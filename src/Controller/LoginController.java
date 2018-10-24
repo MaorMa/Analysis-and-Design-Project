@@ -36,5 +36,6 @@ public class LoginController {
         stage.setTitle("Create User");
         stage.setScene(scene);
         stage.show();
+
     }
 }
