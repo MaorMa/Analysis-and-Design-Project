@@ -38,6 +38,5 @@ public class Model {
 
     public boolean checkValidUser(String userName, String pw){
         return true;
-        //klkolk
     }
 }
