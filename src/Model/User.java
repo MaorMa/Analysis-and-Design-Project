@@ -7,8 +7,8 @@ public class User {
     private String username;
     private String password;
     private String bdate;
-    private String first_name;
-    private String family_name;
+    private String fName;
+    private String lName;
     private String city;
 
     /**
@@ -18,8 +18,8 @@ public class User {
         this.username = username;
         this.password = password;
         this.bdate = bdate;
-        this.first_name = first_name;
-        this.family_name = family_name;
+        this.fName = first_name;
+        this.lName = family_name;
         this.city = city;
     }
 

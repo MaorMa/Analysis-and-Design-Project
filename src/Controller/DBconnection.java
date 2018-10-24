@@ -15,7 +15,7 @@ public class DBconnection {
     private void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection("jdbc:sqlite:users.db");
+            conn = DriverManager.getConnection("jdbc:sqlite:res/users.db");
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
@@ -81,9 +81,9 @@ public class DBconnection {
     public static void main(String[] args) {
         DBconnection db=new DBconnection();
         db.connect(); //create global connection
-        db.createNewTable("users", "id integer PRIMARY KEY, name text NOT NULL, capacity real");
-        db.insert("Raw", 3000);
-        db.removeRow("users","Raw");
-        db.selectAll();
+        //db.createNewTable("users", "id integer PRIMARY KEY, name text NOT NULL, capacity real");
+        //db.insert("Raw", 3000);
+        //db.removeRow("users","Raw");
+        //db.selectAll();
     }
 }
