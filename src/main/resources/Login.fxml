@@ -16,15 +16,15 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginView">
    <center>
-      <GridPane maxHeight="190.0" maxWidth="350.0" minHeight="50.0" minWidth="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="201.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <GridPane maxHeight="140.0" maxWidth="350.0" minHeight="50.0" minWidth="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="201.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="189.0" minWidth="0.0" prefWidth="129.9999974568685" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="400.0" minWidth="5.0" prefWidth="220.0000025431315" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="54.66667683919271" minHeight="2.0" prefHeight="50.66667683919271" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="62.33335113525389" minHeight="2.0" prefHeight="51.333297729492195" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="128.33331044514972" minHeight="2.0" prefHeight="49.33336893717447" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="50.0" minHeight="2.0" prefHeight="35.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="50.0" minHeight="2.0" prefHeight="35.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="2.0" prefHeight="35.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <TextField fx:id="username" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" />
@@ -43,22 +43,15 @@
                </cursor>
             </Button>
             <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <ImageView fx:id="loading" fitHeight="49.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@loading.gif" />
+               </image>
+            </ImageView>
          </children>
       </GridPane>
    </center>
-   <left>
-      <ImageView fx:id="user" fitHeight="109.0" fitWidth="127.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@user.png" />
-         </image></ImageView>
-   </left>
    <top>
       <VBox alignment="CENTER" maxHeight="100.0" maxWidth="700.0" prefHeight="150.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
    </top>
-   <bottom>
-      <ImageView fx:id="loading" fitHeight="49.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@loading.gif" />
-         </image></ImageView>
-   </bottom>
 </BorderPane>

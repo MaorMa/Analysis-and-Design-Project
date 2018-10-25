@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import Model.Model;
 
@@ -23,8 +24,17 @@ public class LoginView implements Initializable {
 
     private LoginController loginController = new LoginController();
 
-    public void CheckifValid(ActionEvent actionEvent) {
-        //loading.setVisible(true);
+    public void CheckifValid(ActionEvent actionEvent) throws InterruptedException {
+        // delay & exit on other thread
+        new Thread(() -> {
+            try {
+                loading.setVisible(true);
+                Thread.sleep(5000);
+                loading.setVisible(false);
+            } catch (InterruptedException ex) {
+            }
+        }).start();
+
         boolean valid = loginController.checkValidUser(username.getText(),password.getText());
         if(valid){
             FXMLLoader fxmlLoader=new FXMLLoader();
@@ -38,11 +48,17 @@ public class LoginView implements Initializable {
             Stage stage=new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);
+            Thread.sleep(3000);
             stage.show();
         }
         else {
-            System.out.println("bad username or password");
-        }
+            loading.setVisible(false);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while SignIn");
+            alert.setContentText("Bad password or username");
+
+            alert.showAndWait();        }
     }
 
     public void CreateUser(ActionEvent actionEvent) {

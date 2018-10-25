@@ -19,7 +19,7 @@ public class HomeView implements Initializable{
     public javafx.scene.control.Label currentuser;
 
     public void setTitle(){
-        currentuser.setText("Welcome " + AController.getCurrentUser() + " ,");
+        currentuser.setText("Welcome " + AController.getCurrentUser() + "!");
     }
 
     @Override
