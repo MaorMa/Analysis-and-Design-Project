@@ -6,6 +6,7 @@ import Model.*;
  */
 //
 public abstract class AController {
+
     protected static Model myModel = new Model();
 
     public static String getCurrentUser() {

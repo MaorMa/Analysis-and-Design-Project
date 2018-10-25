@@ -31,7 +31,7 @@ public class LoginView implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("/Home.fxml"));
             Scene scene=null;
             try{
-                scene=new Scene(fxmlLoader.load(), 600, 600);
+                scene=new Scene(fxmlLoader.load(), 900, 600);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -50,7 +50,7 @@ public class LoginView implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/Create.fxml"));
         Scene scene=null;
         try{
-            scene=new Scene(fxmlLoader.load(), 600, 600);
+            scene=new Scene(fxmlLoader.load(), 900, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }

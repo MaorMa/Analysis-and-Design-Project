@@ -19,7 +19,7 @@ public class HomeView implements Initializable{
     public javafx.scene.control.Label currentuser;
 
     public void setTitle(){
-        currentuser.setText("Welcome " + AController.getCurrentUser() + ",\nPlease choose an option");
+        currentuser.setText("Welcome " + AController.getCurrentUser() + " ,");
     }
 
     @Override
@@ -32,13 +32,14 @@ public class HomeView implements Initializable{
         fxmlLoader.setLocation(getClass().getResource("/Update.fxml"));
         Scene scene=null;
         try{
-            scene=new Scene(fxmlLoader.load(), 600, 600);
+            scene=new Scene(fxmlLoader.load(), 900, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage=new Stage();
         stage.setTitle("Update User");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -47,13 +48,14 @@ public class HomeView implements Initializable{
         fxmlLoader.setLocation(getClass().getResource("/Delete.fxml"));
         Scene scene=null;
         try{
-            scene=new Scene(fxmlLoader.load(), 600, 600);
+            scene=new Scene(fxmlLoader.load(), 900, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage=new Stage();
         stage.setTitle("Delete User");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -62,12 +64,13 @@ public class HomeView implements Initializable{
         fxmlLoader.setLocation(getClass().getResource("/Read.fxml"));
         Scene scene=null;
         try{
-            scene=new Scene(fxmlLoader.load(), 600, 600);
+            scene=new Scene(fxmlLoader.load(), 900, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }
         Stage stage=new Stage();
         stage.setTitle("Read User");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
