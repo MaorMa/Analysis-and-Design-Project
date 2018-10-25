@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="600.0" stylesheets="@Create.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.CreateView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="600.0" stylesheets="@Create.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UpdateView">
    <top>
-      <Label text="SignUp" textFill="#0f4780" BorderPane.alignment="CENTER">
+      <Label text="Update Details" textFill="#0f4780" BorderPane.alignment="CENTER">
          <font>
             <Font name="Arial Bold" size="42.0" />
          </font>
@@ -59,7 +59,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="createUserButton" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" onAction="#createUser" prefHeight="45.0" prefWidth="59.0" text="Create" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="updateUserButton" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="59.0" text="UPDATE" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </bottom>

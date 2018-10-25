@@ -1,6 +1,8 @@
 package View;
 
+import Controller.LoginController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -13,28 +15,33 @@ import java.util.ResourceBundle;
 
 public class LoginView implements Initializable {
 
-    private Model myModel;
+    @FXML
     public javafx.scene.control.TextField username;
     public javafx.scene.control.TextField password;
     public javafx.scene.image.ImageView loading;
 
+    private LoginController loginController = new LoginController();
 
     public void CheckifValid(ActionEvent actionEvent) {
-        loading.setVisible(true);
-        myModel = new Model();
-        boolean valid = myModel.checkValidUser(username.getText(),password.getText());
-        FXMLLoader fxmlLoader=new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("../View/Home.fxml"));
-        Scene scene=null;
-        try{
-         scene=new Scene(fxmlLoader.load(), 600, 600);
-        } catch (IOException e) {
-            e.printStackTrace();
+        //loading.setVisible(true);
+        boolean valid = loginController.checkValidUser(username.getText(),password.getText());
+        if(valid){
+            FXMLLoader fxmlLoader=new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("../View/Home.fxml"));
+            Scene scene=null;
+            try{
+                scene=new Scene(fxmlLoader.load(), 600, 600);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage=new Stage();
+            stage.setTitle("Home");
+            stage.setScene(scene);
+            stage.show();
         }
-        Stage stage=new Stage();
-        stage.setTitle("Home");
-        stage.setScene(scene);
-        stage.show();
+        else {
+            System.out.println("bad username or password");
+        }
     }
 
     public void CreateUser(ActionEvent actionEvent) {

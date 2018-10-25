@@ -1,4 +1,5 @@
 package Controller;
 
-public class HomeController {
+public class HomeController extends AController {
+
 }

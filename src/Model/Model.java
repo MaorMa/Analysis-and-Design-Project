@@ -7,6 +7,8 @@ import javafx.scene.control.*;
  */
 public class Model {
     private DBconnection dBconnection;
+    protected String current_user;
+
     public Model(){
         dBconnection = new DBconnection();
     }
@@ -34,8 +36,25 @@ public class Model {
         }
     }
 
+    public void setCurrent_user(String currentuser) {
+        this.current_user = currentuser;
+    }
+
     public boolean checkValidUser(String userName, String pw){
-        return true;
-        //ad
+        if(this.dBconnection.validateUser(userName,pw)){
+            this.current_user = userName;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public User getUserInfo(String username){
+        return dBconnection.readUser(username);
+    }
+
+    public String getCurrentuser() {
+        return current_user;
     }
 }

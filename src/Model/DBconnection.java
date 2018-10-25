@@ -46,7 +46,7 @@ public class DBconnection {
     }
 
     public boolean insertUser(User user) {
-        String insertQ = "INSERT INTO Users(UserName,Password,BDate,FName,LName,City) VALUES(?,?,?,?,?,?)";
+        String insertQ = "INSERT INTO Users(UserName,Password,FName,LName,BDate,City) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, user.getUsername());
             pstmt.setString(2, user.getPassword());
@@ -93,23 +93,44 @@ public class DBconnection {
         }
     }
 
-    public void readUser(String userName){
+    public User readUser(String userName){
         String selectQ = "SELECT * FROM Users WHERE UserName="+"\""+userName+"\"";
-
-        try (Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(selectQ)){
-
-            // loop through the result set
-            while (rs.next()) {
-                System.out.println(rs.getString("id") +  "\t"+
-                        rs.getString("BDate")+"\t"+
-                        rs.getString("FName")+"\t"+
-                        rs.getString("LName")+"\t"+
-                        rs.getString("City"));
-            }
+        User currentUser = new User();
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(selectQ)){
+            currentUser = new User(rs.getString("UserName"),rs.getString("Password"),
+                rs.getString("BDate"),rs.getString("FName"),rs.getString("LName"),
+                rs.getString("City"));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        return currentUser;
+    }
+
+    public boolean validateUser(String userName,String password){
+        String selectQ = "SELECT Username,Password FROM Users WHERE UserName="+"\""+userName+"\"" +"AND Password="+"\""+password+"\"";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(selectQ)){
+            if(!rs.next()) {
+                stmt.close();
+                return false;
+            }
+            else{
+                stmt.close();
+                return true;
+            }
+//            // loop through the result set
+//            while (rs.next()) {
+//                System.out.println(rs.getString("id") +  "\t"+
+//                        rs.getString("BDate")+"\t"+
+//                        rs.getString("FName")+"\t"+
+//                        rs.getString("LName")+"\t"+
+//                        rs.getString("City"));
+//            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
     }
 
     public static void main(String[] args) {

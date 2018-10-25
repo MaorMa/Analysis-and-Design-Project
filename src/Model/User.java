@@ -25,6 +25,15 @@ public class User {
         this.city = city;
     }
 
+    public User(){
+        this.username = "";
+        this.password = "";
+        this.bdate = "";
+        this.fName = "";
+        this.lName = "";
+        this.city = "";
+    }
+
     public String getUsername() {
         return username;
     }
