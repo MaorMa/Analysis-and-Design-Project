@@ -1,7 +1,5 @@
 package Model;
 
-import Controller.CreateController;
-import Controller.DBconnection;
 import javafx.scene.control.*;
 
 /**
