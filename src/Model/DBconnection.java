@@ -81,9 +81,9 @@ public class DBconnection {
         }
     }
 
-    public void removeUser(User user) {
+    public void removeUser(String username) {
         String removeQ = "DELETE FROM Users\n" +
-                "WHERE UserName='" + user.getUsername() + "';";
+                "WHERE UserName='" + username + "';";
 
         try (PreparedStatement pstmt = conn.prepareStatement(removeQ)) {
             pstmt.execute();

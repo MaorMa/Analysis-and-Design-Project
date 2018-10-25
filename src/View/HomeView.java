@@ -36,7 +36,37 @@ public class HomeView implements Initializable{
             e.printStackTrace();
         }
         Stage stage=new Stage();
-        stage.setTitle("Create User");
+        stage.setTitle("Update User");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void delete(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../View/Delete.fxml"));
+        Scene scene=null;
+        try{
+            scene=new Scene(fxmlLoader.load(), 600, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.setTitle("Delete User");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void read(ActionEvent actionEvent) {
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../View/Read.fxml"));
+        Scene scene=null;
+        try{
+            scene=new Scene(fxmlLoader.load(), 600, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.setTitle("Read User");
         stage.setScene(scene);
         stage.show();
     }

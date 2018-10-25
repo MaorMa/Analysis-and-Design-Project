@@ -5,6 +5,8 @@ import Controller.UpdateController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -45,7 +47,7 @@ public class UpdateView implements Initializable{
         setCurrentUserDetails();
     }
 
-    public void updateUserInfo(ActionEvent actionEvent) {
+    public void updateUserInfo(ActionEvent actionEvent) throws InterruptedException {
         String date_to_string = "";
         String oldPassword = updateController.getUser().getPassword();//todo need to check what if pw is empty!!!
         if(date.getValue() != null)//check if date is null
@@ -54,5 +56,13 @@ public class UpdateView implements Initializable{
         }
         updateController.updateUserInfo(username.getText(), password.getText(), date_to_string, fname.getText(),
                 lname.getText(), city.getText());
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Update Confirmation");
+        alert.setHeaderText("Update Done");
+
+        alert.showAndWait();
+        Stage stage = (Stage) updateUserButton.getScene().getWindow();
+        stage.close();
     }
+
 }

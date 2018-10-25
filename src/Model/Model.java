@@ -61,4 +61,8 @@ public class Model {
     public void updateUserInfo(String userName, User newUser){
         dBconnection.updateUser(userName,newUser);
     }
+
+    public void deleteUser(String username){
+        dBconnection.removeUser(username);
+    }
 }

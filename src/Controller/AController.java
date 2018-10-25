@@ -10,4 +10,10 @@ public abstract class AController {
     public static String getCurrentUser() {
         return myModel.getCurrentuser();
     }
+
+    public User getUser(){
+        return myModel.getUserInfo(myModel.getCurrentuser());
+    }
+
+    public User getUserByUsername(String username) { return myModel.getUserInfo(username); }
 }

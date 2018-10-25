@@ -27,9 +27,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button maxHeight="70.0" maxWidth="100.0" mnemonicParsing="false" text="READ" GridPane.halignment="CENTER" />
+            <Button fx:id="readButton" maxHeight="70.0" maxWidth="100.0" mnemonicParsing="false" onAction="#read" text="READ" GridPane.halignment="CENTER" />
             <Button fx:id="updateButton" maxHeight="70.0" maxWidth="100.0" mnemonicParsing="false" onAction="#update" text="UPDATE" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <Button maxHeight="70.0" maxWidth="100.0" mnemonicParsing="false" text="DELETE" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <Button fx:id="deleteButton" maxHeight="70.0" maxWidth="100.0" mnemonicParsing="false" onAction="#delete" text="DELETE" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
          </children>
       </GridPane>
    </center>

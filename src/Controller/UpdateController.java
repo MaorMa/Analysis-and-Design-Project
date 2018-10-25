@@ -7,9 +7,6 @@ import Model.*;
  */
 public class UpdateController extends AController{
 
-    public User getUser(){
-        return myModel.getUserInfo(myModel.getCurrentuser());
-    }
 
     public void updateUserInfo(String username_to_string, String password_to_string, String fname_to_string,
                                String lname_to_string, String date_to_string, String city_to_string){
