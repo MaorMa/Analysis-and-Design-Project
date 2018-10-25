@@ -119,24 +119,11 @@ public class DBconnection {
                 stmt.close();
                 return true;
             }
-//            // loop through the result set
-//            while (rs.next()) {
-//                System.out.println(rs.getString("id") +  "\t"+
-//                        rs.getString("BDate")+"\t"+
-//                        rs.getString("FName")+"\t"+
-//                        rs.getString("LName")+"\t"+
-//                        rs.getString("City"));
-//            }
+
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return false;
     }
 
-//    public static void main(String[] args) {
-//        DBconnection db=new DBconnection();
-//        db.insertUser(new User("saarm", "123", "04/11/90", "a","c", "a"));
-//        db.updateUser(new User("saarm", null,null,null,null,null),
-//                new User("aviv", "123", "04/11/90", "a","c", "a"));
-//    }
 }
