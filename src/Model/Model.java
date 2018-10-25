@@ -65,4 +65,14 @@ public class Model {
     public void deleteUser(String username){
         dBconnection.removeUser(username);
     }
+
+    public boolean checkifExists(String username) {
+        if(this.dBconnection.readUser(username) == null){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
 }

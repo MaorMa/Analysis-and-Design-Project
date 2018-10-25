@@ -53,7 +53,7 @@ public class LoginView implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage=new Stage();
+        Stage stage = new Stage();
         stage.setTitle("Create User");
         stage.setScene(scene);
         stage.show();

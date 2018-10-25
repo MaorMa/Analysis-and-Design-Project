@@ -3,6 +3,7 @@ package View;
 import Controller.ReadController;
 import Model.User;
 import javafx.event.ActionEvent;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -28,9 +29,17 @@ public class ReadView {
         fname.setText(user.getFirst_name());
         lname.setText(user.getLast_name());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(user.getBdate() , formatter);
-        date.setValue(localDate);
-        city.setText(user.getCity());
+        if(user.getBdate() == null || !readController.checkifExists(user.getUsername())){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error while Read user details");
+            alert.setContentText("invalid user");
+        }
+        else {
+            LocalDate localDate = LocalDate.parse(user.getBdate(), formatter);
+            date.setValue(localDate);
+            city.setText(user.getCity());
+        }
     }
 
     public void closeStage(ActionEvent actionEvent) {

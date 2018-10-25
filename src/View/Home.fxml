@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" stylesheets="@Home.css" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeView">
    <top>
-      <Label fx:id="currentuser" text="aa" BorderPane.alignment="CENTER">
+      <Label fx:id="currentuser" text="" BorderPane.alignment="CENTER">
          <font>
             <Font size="52.0" />
          </font>
