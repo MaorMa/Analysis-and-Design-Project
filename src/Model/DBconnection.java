@@ -63,10 +63,10 @@ public class DBconnection {
         }
     }
 
-    public void updateUser(User oldUser, User newUser) {
+    public void updateUser(String oldUserName, User newUser) {
         String insertQ = "UPDATE Users\n " +
                 "SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n " +
-                "WHERE UserName='"+oldUser.getUsername()+"'";
+                "WHERE UserName='"+oldUserName+"'";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, newUser.getUsername());
             pstmt.setString(2, newUser.getPassword());
@@ -133,10 +133,10 @@ public class DBconnection {
         return false;
     }
 
-    public static void main(String[] args) {
-        DBconnection db=new DBconnection();
-        db.insertUser(new User("saarm", "123", "04/11/90", "a","c", "a"));
-        db.updateUser(new User("saarm", null,null,null,null,null),
-                new User("aviv", "123", "04/11/90", "a","c", "a"));
-    }
+//    public static void main(String[] args) {
+//        DBconnection db=new DBconnection();
+//        db.insertUser(new User("saarm", "123", "04/11/90", "a","c", "a"));
+//        db.updateUser(new User("saarm", null,null,null,null,null),
+//                new User("aviv", "123", "04/11/90", "a","c", "a"));
+//    }
 }

@@ -57,4 +57,8 @@ public class Model {
     public String getCurrentuser() {
         return current_user;
     }
+
+    public void updateUserInfo(String userName, User newUser){
+        dBconnection.updateUser(userName,newUser);
+    }
 }

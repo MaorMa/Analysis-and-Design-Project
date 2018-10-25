@@ -10,5 +10,4 @@ public abstract class AController {
     public static String getCurrentUser() {
         return myModel.getCurrentuser();
     }
-
 }

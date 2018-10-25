@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.PasswordField?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="600.0" stylesheets="@Create.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.UpdateView">
    <top>
       <Label text="Update Details" textFill="#0f4780" BorderPane.alignment="CENTER">
@@ -39,12 +40,12 @@
             <Label text="Last name" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="Date of birth" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Label text="City" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <TextField fx:id="username" prefHeight="25.0" prefWidth="188.0" GridPane.columnIndex="1" />
+            <TextField fx:id="username" disable="true" editable="false" prefHeight="25.0" prefWidth="188.0" GridPane.columnIndex="1" />
             <TextField fx:id="fname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="lname" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             <DatePicker fx:id="date" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </center>
@@ -59,7 +60,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="updateUserButton" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="59.0" text="UPDATE" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="updateUserButton" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" onAction="#updateUserInfo" prefHeight="45.0" prefWidth="59.0" text="UPDATE" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
          </children>
       </GridPane>
    </bottom>
