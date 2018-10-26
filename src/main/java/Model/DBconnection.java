@@ -43,7 +43,7 @@ public class DBconnection {
         }
     }
 
-    private boolean insertUser(User user) {
+    public boolean insertUser(User user) {
         String insertQ = "INSERT INTO Users(UserName,Password,FName,LName,BDate,City) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, user.getUsername());
@@ -61,7 +61,7 @@ public class DBconnection {
         }
     }
 
-    private void updateUser(String oldUserName, User newUser) {
+    public void updateUser(String oldUserName, User newUser) {
         String insertQ = "UPDATE Users\n " +
                 "SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n " +
                 "WHERE UserName='"+oldUserName+"'";
@@ -79,7 +79,7 @@ public class DBconnection {
         }
     }
 
-    private void removeUser(String username) {
+    public void removeUser(String username) {
         String removeQ = "DELETE FROM Users\n" +
                 "WHERE UserName='" + username + "';";
 
@@ -91,7 +91,7 @@ public class DBconnection {
         }
     }
 
-    private User readUser(String userName){
+    public User readUser(String userName){
         String selectQ = "SELECT * FROM Users WHERE UserName="+"\""+userName+"\"";
         User currentUser = null;
         try (Statement stmt = conn.createStatement();
@@ -105,7 +105,7 @@ public class DBconnection {
         return currentUser;
     }
 
-    private boolean validateUser(String userName,String password){
+    public boolean validateUser(String userName, String password){
         String selectQ = "SELECT Username,Password FROM Users WHERE UserName="+"\""+userName+"\"" +"AND Password="+"\""+password+"\"";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(selectQ)){
