@@ -36,7 +36,7 @@ public class ReadView {
             fname.setText(user.getFirst_name());
             lname.setText(user.getLast_name());
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            if(!readController.checkifExists(user.getUsername()) || user.getBdate() == null){
+            if(!readController.checkIfExists(user.getUsername()) || user.getBdate() == null){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Error");
                 alert.setHeaderText("Error while Read user details");
@@ -51,8 +51,8 @@ public class ReadView {
 
     }
 
-    public void closeStage(ActionEvent actionEvent) {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
-    }
+//    public void closeStage(ActionEvent actionEvent) {
+//        Stage stage = (Stage) closeButton.getScene().getWindow();
+//        stage.close();
+//    }
 }

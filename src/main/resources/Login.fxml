@@ -48,6 +48,9 @@
                <image>
                   <Image url="@loading.gif" />
                </image>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
             </ImageView>
          </children>
          <BorderPane.margin>

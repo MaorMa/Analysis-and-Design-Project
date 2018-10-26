@@ -17,6 +17,10 @@ import java.util.ResourceBundle;
 public class HomeView implements Initializable{
     @FXML
     public javafx.scene.control.Label currentuser;
+    public javafx.scene.control.Button deleteButton;
+
+
+    private HomeController homeController = new HomeController();
 
     public void setTitle(){
         currentuser.setText("Welcome " + AController.getCurrentUser() + "!");
@@ -57,6 +61,16 @@ public class HomeView implements Initializable{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+
+//        new Thread(() -> {
+//            try {
+//                homeController.closeStage();
+//                Stage Dstage = (Stage) deleteButton.getScene().getWindow();
+//                Dstage.close();
+//            } catch (InterruptedException ex) {
+//            }
+//        }).start();
+
     }
 
     public void read(ActionEvent actionEvent) {

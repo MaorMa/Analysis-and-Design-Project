@@ -10,8 +10,8 @@ public class ReadController extends AController{
         return myModel.getUserInfo(username);
     }
 
-    public boolean checkifExists(String username) {
-        if(myModel.checkifExists(username) == true) {
+    public boolean checkIfExists(String username) {
+        if(myModel.checkIfExists(username) == true) {
             return true;
         }else
             return false;

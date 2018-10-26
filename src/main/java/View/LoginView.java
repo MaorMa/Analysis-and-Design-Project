@@ -35,7 +35,7 @@ public class LoginView implements Initializable {
             }
         }).start();
 
-        boolean valid = loginController.checkValidUser(username.getText(),password.getText());
+        boolean valid = !username.getText().isEmpty() && !password.getText().isEmpty() && loginController.checkValidUser(username.getText(),password.getText());
         if(valid){
             FXMLLoader fxmlLoader=new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/Home.fxml"));
@@ -48,17 +48,37 @@ public class LoginView implements Initializable {
             Stage stage=new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);
-            Thread.sleep(1200);
+            Thread.sleep(1000);
             stage.setResizable(false);
             stage.show();
         }
-        else {
+        else if(username.getText().isEmpty()){
             loading.setVisible(false);
+            Thread.sleep(1000);
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
-            alert.setHeaderText("Error while SignIn");
+            alert.setHeaderText("Error during Sign In");
+            alert.setContentText("Username field is empty");
+            alert.showAndWait();
+        }
+        else if(password.getText().isEmpty()){
+            loading.setVisible(false);
+            Thread.sleep(1000);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error during Sign In");
+            alert.setContentText("Password field is empty");
+            alert.showAndWait();
+        }
+        else{
+            loading.setVisible(false);
+            Thread.sleep(1000);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error during Sign In");
             alert.setContentText("Bad password or username");
-            alert.showAndWait();        }
+            alert.showAndWait();
+        }
     }
 
     public void CreateUser(ActionEvent actionEvent) {

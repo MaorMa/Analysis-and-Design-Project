@@ -33,7 +33,7 @@
             <Label text="Last name" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="Date of birth" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <Label text="City" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            <TextField fx:id="username" prefHeight="25.0" prefWidth="188.0" GridPane.columnIndex="1" />
+            <TextField fx:id="username" disable="true" editable="false" prefHeight="25.0" prefWidth="188.0" GridPane.columnIndex="1" />
             <TextField fx:id="fname" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="lname" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <TextField fx:id="city" GridPane.columnIndex="1" GridPane.rowIndex="5" />

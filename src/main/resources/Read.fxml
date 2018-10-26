@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="600.0" stylesheets="@Read.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReadView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="600.0" stylesheets="@Read.css" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.ReadView">
    <center>
       <GridPane maxHeight="150.0" maxWidth="500.0" prefHeight="168.0" prefWidth="500.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -30,10 +30,10 @@
             <Label text="Date of birth" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
             <Label text="City" textFill="WHITE" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
             <TextField fx:id="username" prefHeight="39.0" prefWidth="227.0" GridPane.columnIndex="1" />
-            <TextField fx:id="fname" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="lname" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="city" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="date" disable="true" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="fname" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="lname" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="city" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="date" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>

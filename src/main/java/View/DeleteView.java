@@ -1,6 +1,7 @@
 package View;
 
 import Controller.DeleteController;
+import Controller.HomeController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,12 +28,35 @@ public class DeleteView implements Initializable{
 
     public javafx.scene.control.Button deleteUserButton;
 
-
-
     DeleteController deleteController = new DeleteController();
+    //HomeController homeController = new HomeController();
 
     public void deleteUser(ActionEvent actionEvent) {
-        if(password.getText().equals(Cpassword.getText()) && confirm.isSelected()) {
+        if(password.getText().equals("") || Cpassword.getText().equals("")){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Delete Error");
+            alert.setHeaderText("One of the fields was left empty");
+            alert.setContentText("Please make sure you fill in both password fields in order to delete your user");
+
+            alert.showAndWait();
+        }
+        else if(!confirm.isSelected()){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Delete Error");
+            alert.setHeaderText("The confirmation checkbox was not pressed");
+            alert.setContentText("Please make sure you check the checkbox in order to delete your user");
+
+            alert.showAndWait();
+        }
+        else if(!password.getText().equals(Cpassword.getText())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Delete Error");
+            alert.setHeaderText("Passwords did not match");
+            alert.setContentText("Please make sure both passwords are similar in order to delete your user");
+
+            alert.showAndWait();
+        }
+        else{
             deleteController.deleteUser(username.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Delete Confirmation");
@@ -41,6 +65,7 @@ public class DeleteView implements Initializable{
             alert.showAndWait();
             Stage stage = (Stage) deleteUserButton.getScene().getWindow();
             stage.close();
+
         }
     }
 
