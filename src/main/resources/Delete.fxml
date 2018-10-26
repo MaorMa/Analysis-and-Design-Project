@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="569.0" stylesheets="@Delete.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DeleteView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="569.0" stylesheets="@Delete.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.DeleteView">
    <center>
       <GridPane maxHeight="120.0" maxWidth="500.0" prefHeight="200.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -50,7 +50,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="deleteUserButton" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" onAction="#deleteUser" prefHeight="45.0" prefWidth="59.0" text="Delete" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Button fx:id="deleteUserButton" contentDisplay="CENTER" maxWidth="100.0" mnemonicParsing="false" onAction="#deleteUser" onKeyPressed="#onEnter" prefHeight="45.0" prefWidth="59.0" text="Delete" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="50.0" />
                </GridPane.margin></Button>

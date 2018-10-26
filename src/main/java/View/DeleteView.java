@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,7 +33,7 @@ public class DeleteView implements Initializable{
     DeleteController deleteController = new DeleteController();
     //HomeController homeController = new HomeController();
 
-    public void deleteUser(ActionEvent actionEvent) {
+    public void deleteUser() {
         if(password.getText().equals("") || Cpassword.getText().equals("")){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Delete Error");
@@ -76,5 +78,13 @@ public class DeleteView implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setCurrentUserDetails();
+    }
+
+    public void onEnter(KeyEvent keyEvent) throws InterruptedException {
+        if (keyEvent.getCode().equals(KeyCode.ENTER))
+        {
+            Thread.sleep(500);
+            this.deleteUser();
+        }
     }
 }

@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import Model.Model;
 
@@ -24,7 +26,7 @@ public class LoginView implements Initializable {
 
     private LoginController loginController = new LoginController();
 
-    public void CheckifValid(ActionEvent actionEvent) throws InterruptedException {
+    public void CheckifValid() throws InterruptedException {
         // delay & exit on other thread
         new Thread(() -> {
             try {
@@ -100,5 +102,13 @@ public class LoginView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loading.setVisible(false);
+    }
+
+    public void onEnter(KeyEvent keyEvent) throws InterruptedException {
+        if (keyEvent.getCode().equals(KeyCode.ENTER))
+        {
+            Thread.sleep(500);
+            this.CheckifValid();
+        }
     }
 }

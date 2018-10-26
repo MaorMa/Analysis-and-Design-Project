@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.LoginView">
    <center>
       <GridPane maxHeight="140.0" maxWidth="350.0" minHeight="50.0" minWidth="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="201.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -28,7 +28,7 @@
             <RowConstraints maxHeight="50.0" minHeight="2.0" prefHeight="35.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="username" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" />
+            <TextField fx:id="username" onKeyPressed="#onEnter" prefHeight="25.0" prefWidth="270.0" GridPane.columnIndex="1" />
             <Label text="Username:" textFill="WHITE" GridPane.halignment="LEFT">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -43,7 +43,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <PasswordField fx:id="password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="password" onAction="#onEnter" onKeyPressed="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ImageView fx:id="loading" fitHeight="49.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
                   <Image url="@loading.gif" />

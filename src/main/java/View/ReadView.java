@@ -4,6 +4,8 @@ import Controller.ReadController;
 import Model.User;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.time.LocalDate;
@@ -24,7 +26,7 @@ public class ReadView {
 
     private ReadController readController=new ReadController();
 
-    public void readUserInfo(ActionEvent actionEvent) {
+    public void readUserInfo() {
         User user = readController.getUserByUsername(username.getText());
         if(user == null){
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -51,8 +53,12 @@ public class ReadView {
 
     }
 
-//    public void closeStage(ActionEvent actionEvent) {
-//        Stage stage = (Stage) closeButton.getScene().getWindow();
-//        stage.close();
-//    }
+    public void onEnter(KeyEvent keyEvent) throws InterruptedException {
+        if (keyEvent.getCode().equals(KeyCode.ENTER))
+        {
+            Thread.sleep(500);
+            this.readUserInfo();
+        }
+    }
+
 }
