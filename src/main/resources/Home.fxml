@@ -21,7 +21,7 @@
       </Label>
    </top>
    <center>
-      <GridPane alignment="CENTER" maxHeight="100.0" maxWidth="435.0" minHeight="94.0" minWidth="200.0" prefHeight="100.0" prefWidth="435.0" BorderPane.alignment="CENTER">
+      <GridPane alignment="CENTER" maxHeight="100.0" maxWidth="450.0" minHeight="94.0" minWidth="200.0" prefHeight="100.0" prefWidth="435.0" BorderPane.alignment="CENTER">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -31,9 +31,9 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="readButton" maxHeight="50.0" maxWidth="140.0" mnemonicParsing="false" onAction="#read" text="READ" GridPane.halignment="CENTER" />
-            <Button fx:id="updateButton" maxHeight="50.0" maxWidth="140.0" mnemonicParsing="false" onAction="#update" text="UPDATE" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-            <Button fx:id="deleteButton" maxHeight="50.0" maxWidth="140.0" mnemonicParsing="false" onAction="#delete" text="DELETE" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+            <Button fx:id="readButton" maxHeight="50.0" maxWidth="140.0" mnemonicParsing="false" onAction="#read" text="Read User Data" GridPane.halignment="CENTER" />
+            <Button fx:id="updateButton" maxHeight="50.0" maxWidth="140.0" mnemonicParsing="false" onAction="#update" text="Update User Data" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+            <Button fx:id="deleteButton" maxHeight="50.0" maxWidth="140.0" mnemonicParsing="false" onAction="#delete" text="Delete My User" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
          </children>
          <BorderPane.margin>
             <Insets left="100.0" />

@@ -1,19 +1,17 @@
 package Model;
 
 /**
- * Created by Maor on 10/17/2018.
+ *  Database connection class
  */
+
 import Model.User;
 
 import java.sql.*;
 
 //todo check db file
 public class DBconnection {
-    /**
-     *
-     * @return
-     */
-    Connection conn = null;
+
+    private Connection conn = null;
 
     public DBconnection() {
         try {
@@ -24,7 +22,7 @@ public class DBconnection {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
-        System.out.println("Connection established successfully");
+        //System.out.println("Connection established successfully");
     }
 
     private void createTables(){
@@ -39,13 +37,13 @@ public class DBconnection {
                 ");";
         try (PreparedStatement pstmt = conn.prepareStatement(createQuary)) {
             pstmt.executeUpdate();
-            System.out.println("UsersCreated Complete");
+            //System.out.println("UsersCreated Complete");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
     }
 
-    public boolean insertUser(User user) {
+    private boolean insertUser(User user) {
         String insertQ = "INSERT INTO Users(UserName,Password,FName,LName,BDate,City) VALUES(?,?,?,?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setString(1, user.getUsername());
@@ -55,15 +53,15 @@ public class DBconnection {
             pstmt.setString(5, user.getLast_name());
             pstmt.setString(6, user.getCity());
             pstmt.executeUpdate();
-                System.out.println("Insert Complete");
+                //System.out.println("Insert Complete");
                 return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
             return false;
         }
     }
 
-    public void updateUser(String oldUserName, User newUser) {
+    private void updateUser(String oldUserName, User newUser) {
         String insertQ = "UPDATE Users\n " +
                 "SET UserName=?,Password=?,BDate=?,FName=?,LName=?,City=?\n " +
                 "WHERE UserName='"+oldUserName+"'";
@@ -75,25 +73,25 @@ public class DBconnection {
             pstmt.setString(5, newUser.getLast_name());
             pstmt.setString(6, newUser.getCity());
             pstmt.executeUpdate();
-            System.out.println("Update Complete");
+            //System.out.println("Update Complete");
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
     }
 
-    public void removeUser(String username) {
+    private void removeUser(String username) {
         String removeQ = "DELETE FROM Users\n" +
                 "WHERE UserName='" + username + "';";
 
         try (PreparedStatement pstmt = conn.prepareStatement(removeQ)) {
             pstmt.execute();
-                System.out.println("Delete Complete");
+                //System.out.println("Delete Complete");
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
-    public User readUser(String userName){
+    private User readUser(String userName){
         String selectQ = "SELECT * FROM Users WHERE UserName="+"\""+userName+"\"";
         User currentUser = null;
         try (Statement stmt = conn.createStatement();
@@ -102,12 +100,12 @@ public class DBconnection {
                 rs.getString("BDate"),rs.getString("FName"),rs.getString("LName"),
                 rs.getString("City"));
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return currentUser;
     }
 
-    public boolean validateUser(String userName,String password){
+    private boolean validateUser(String userName,String password){
         String selectQ = "SELECT Username,Password FROM Users WHERE UserName="+"\""+userName+"\"" +"AND Password="+"\""+password+"\"";
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(selectQ)){

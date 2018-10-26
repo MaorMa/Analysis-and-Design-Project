@@ -29,7 +29,7 @@ public class LoginView implements Initializable {
         new Thread(() -> {
             try {
                 loading.setVisible(true);
-                Thread.sleep(5000);
+                Thread.sleep(4000);
                 loading.setVisible(false);
             } catch (InterruptedException ex) {
             }
@@ -48,7 +48,8 @@ public class LoginView implements Initializable {
             Stage stage=new Stage();
             stage.setTitle("Home");
             stage.setScene(scene);
-            Thread.sleep(3000);
+            Thread.sleep(1200);
+            stage.setResizable(false);
             stage.show();
         }
         else {
@@ -57,7 +58,6 @@ public class LoginView implements Initializable {
             alert.setTitle("Error");
             alert.setHeaderText("Error while SignIn");
             alert.setContentText("Bad password or username");
-
             alert.showAndWait();        }
     }
 

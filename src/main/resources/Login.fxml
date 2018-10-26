@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -49,6 +50,9 @@
                </image>
             </ImageView>
          </children>
+         <BorderPane.margin>
+            <Insets left="120.0" />
+         </BorderPane.margin>
       </GridPane>
    </center>
    <top>
