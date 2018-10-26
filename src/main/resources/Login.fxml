@@ -43,7 +43,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <PasswordField fx:id="password" onAction="#onEnter" onKeyPressed="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <PasswordField fx:id="password" onKeyPressed="#onEnter" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <ImageView fx:id="loading" fitHeight="49.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <image>
                   <Image url="@loading.gif" />
