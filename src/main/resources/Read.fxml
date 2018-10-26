@@ -33,7 +33,7 @@
             <TextField fx:id="fname" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="lname" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <TextField fx:id="city" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <DatePicker fx:id="date" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <DatePicker fx:id="date" disable="true" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </center>

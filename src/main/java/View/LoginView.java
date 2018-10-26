@@ -93,6 +93,7 @@ public class LoginView implements Initializable {
         Stage stage = new Stage();
         stage.setTitle("Create User");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
