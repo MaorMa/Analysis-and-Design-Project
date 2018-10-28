@@ -2,6 +2,7 @@ package View;
 
 import Controller.AController;
 import Controller.HomeController;
+import com.sun.javafx.stage.StageHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,15 +62,6 @@ public class HomeView implements Initializable{
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
-//        new Thread(() -> {
-//            try {
-//                homeController.closeStage();
-//                Stage Dstage = (Stage) deleteButton.getScene().getWindow();
-//                Dstage.close();
-//            } catch (InterruptedException ex) {
-//            }
-//        }).start();
 
     }
 

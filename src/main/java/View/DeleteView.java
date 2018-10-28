@@ -2,6 +2,7 @@ package View;
 
 import Controller.DeleteController;
 import Controller.HomeController;
+import com.sun.javafx.stage.StageHelper;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -34,6 +36,7 @@ public class DeleteView implements Initializable{
     //HomeController homeController = new HomeController();
 
     public void deleteUser() {
+        List<Stage> stages  = StageHelper.getStages();//get all stages that exist
         if(password.getText().equals("") || Cpassword.getText().equals("")){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Delete Error");
@@ -65,6 +68,11 @@ public class DeleteView implements Initializable{
             alert.setHeaderText("User Removed");
 
             alert.showAndWait();
+            //find stage "Home" and close it
+            for(int i=0 ;i<stages.size();i++){
+                if(stages.get(i).getTitle().equals("Home"))
+                    stages.get(i).close();
+            }
             Stage stage = (Stage) deleteUserButton.getScene().getWindow();
             stage.close();
 
