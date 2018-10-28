@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Maor on 10/25/2018.
  */
-public class DeleteView implements Initializable{
+public class DeleteView extends AView implements Initializable {
     @FXML
     public javafx.scene.control.TextField username;
     public javafx.scene.control.TextField password;
@@ -33,10 +33,8 @@ public class DeleteView implements Initializable{
     public javafx.scene.control.Button deleteUserButton;
 
     DeleteController deleteController = new DeleteController();
-    //HomeController homeController = new HomeController();
 
     public void deleteUser() {
-        List<Stage> stages  = StageHelper.getStages();//get all stages that exist
         if(password.getText().equals("") || Cpassword.getText().equals("")){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Delete Error");
@@ -65,14 +63,10 @@ public class DeleteView implements Initializable{
             deleteController.deleteUser(username.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Delete Confirmation");
-            alert.setHeaderText("User Removed");
+            alert.setHeaderText("User Removed. You will be signed out");
 
             alert.showAndWait();
-            //find stage "Home" and close it
-            for(int i=0 ;i<stages.size();i++){
-                if(stages.get(i).getTitle().equals("Home"))
-                    stages.get(i).close();
-            }
+            getStages("Home").close();
             Stage stage = (Stage) deleteUserButton.getScene().getWindow();
             stage.close();
 

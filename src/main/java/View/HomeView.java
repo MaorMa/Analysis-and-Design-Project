@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class HomeView implements Initializable{
+public class HomeView extends AView  implements Initializable{
     @FXML
     public javafx.scene.control.Label currentuser;
     public javafx.scene.control.Button deleteButton;
