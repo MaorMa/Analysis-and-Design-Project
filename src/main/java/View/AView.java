@@ -9,16 +9,14 @@ public abstract class AView {
     protected List<Stage> stages;//  = StageHelper.getStages();//get all stages that exist
 
     /**
-     * Find and return stage by name of stage
+     * Closes a stage
      * @param stageName
-     * @return
      */
-    public Stage getStages(String stageName){
+    public void closeStage(String stageName){
         stages = StageHelper.getStages();//get all stages that exist
         for(int i=0 ;i<stages.size();i++){
             if(stages.get(i).getTitle().equals(stageName))
-                return stages.get(i);
+                stages.get(i).close();
         }
-        return null;
     }
 }

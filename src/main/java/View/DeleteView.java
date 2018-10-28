@@ -68,9 +68,9 @@ public class DeleteView extends AView implements Initializable {
 
 
             alert.showAndWait();
-            getStages("Home").close();
             Stage stage = (Stage) deleteUserButton.getScene().getWindow();
             stage.close();
+            closeStage("Home");
 
         }
     }
