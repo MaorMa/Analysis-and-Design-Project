@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Created by Maor on 10/25/2018.
  */
-public class ReadView {
+public class ReadView extends AView {
 
     public javafx.scene.control.TextField username;
     public javafx.scene.control.TextField fname;

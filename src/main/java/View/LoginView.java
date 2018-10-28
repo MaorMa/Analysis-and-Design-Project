@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginView implements Initializable {
+public class LoginView extends AView  implements Initializable {
 
     @FXML
     public javafx.scene.control.TextField username;

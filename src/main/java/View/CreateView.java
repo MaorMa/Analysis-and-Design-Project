@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Created by Maor on 10/24/2018.
  */
-public class CreateView {
+public class CreateView extends AView{
     private CreateController createController=new CreateController();
     @FXML
     public javafx.scene.control.TextField username;

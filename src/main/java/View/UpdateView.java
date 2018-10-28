@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Maor on 10/25/2018.
  */
-public class UpdateView implements Initializable{
+public class UpdateView extends AView  implements Initializable{
     private UpdateController updateController=new UpdateController();
     @FXML
     public javafx.scene.control.TextField username;
