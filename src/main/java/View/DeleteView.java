@@ -63,7 +63,9 @@ public class DeleteView extends AView implements Initializable {
             deleteController.deleteUser(username.getText());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Delete Confirmation");
-            alert.setHeaderText("User Removed. You will be signed out");
+            alert.setHeaderText("User Removed");
+            alert.setContentText("You will be signed out automatically");
+
 
             alert.showAndWait();
             getStages("Home").close();
