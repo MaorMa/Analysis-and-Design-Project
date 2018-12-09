@@ -27,6 +27,7 @@ public class LoginView extends AView  implements Initializable {
     private LoginController loginController = new LoginController();
 
     public void CheckifValid() throws InterruptedException {
+        scenes.put("Login",username.getScene());//add login scene
         // delay & exit on other thread
         new Thread(() -> {
             try {
@@ -44,15 +45,13 @@ public class LoginView extends AView  implements Initializable {
             Scene scene=null;
             try{
                 scene=new Scene(fxmlLoader.load(), 900, 600);
+                scenes.put("Home",scene);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Stage stage=new Stage();
-            stage.setTitle("Home");
-            stage.setScene(scene);
+            mainStage = getStage("Vacation4U");
             Thread.sleep(1000);
-            stage.setResizable(false);
-            stage.show();
+            mainStage.setScene(scene);
         }
         else if(username.getText().isEmpty()){
             loading.setVisible(false);
