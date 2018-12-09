@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -72,6 +73,13 @@ public class VacationView extends AView implements Initializable {
     }
 
         public void searchVac (ActionEvent actionEvent){
+            TextInputDialog dialog = new TextInputDialog("Destination");
+            dialog.setTitle("Search for a Destination");
+            dialog.setHeaderText("Write the Destination you are looking for");
+            dialog.setContentText("Destination:");
+
+            Optional<String> result = dialog.showAndWait();
+            System.out.println(result.get());
         }
     }
 

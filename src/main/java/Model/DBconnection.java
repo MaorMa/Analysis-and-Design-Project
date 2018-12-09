@@ -9,7 +9,7 @@ import java.sql.*;
 //todo check db file
 public class DBconnection {
     private Connection conn = null;
-    private int vacationID=0, paymentID =0;
+    private static int vacationID=0, paymentID =0;
 
     public DBconnection() {
         try {
@@ -33,6 +33,7 @@ public class DBconnection {
                 "\t`City`\tTEXT NOT NULL,\n" +
                 "\tPRIMARY KEY(`UserName`)\n" +
                 ");";
+
         String createVacations="CREATE TABLE IF NOT EXISTS `Vacations` (\n" +
                 "\t`VacationID`\tNUMERIC NOT NULL,\n" +
                 "\t`Advertiser`\tTEXT NOT NULL,\n" +
@@ -43,7 +44,7 @@ public class DBconnection {
                 "\t`NTickets`\tNUMERIC NOT NULL,\n" +
                 "\t`ReturnFlightDeparture`\tDATE,\n" +
                 "\t`Destination`\tTEXT NOT NULL,\n" +
-                "\t`TicketsType`\tNOT NULL CHECK (TicketsType IN ('Adult', 'Chile', 'Baby')),\n" +
+                "\t`TicketType`\tNOT NULL CHECK (TicketType IN ('Adult', 'Child', 'Baby')),\n" +
                 "\t`VacationType`\tNOT NULL CHECK (VacationType IN ('Urban', 'Exotic', 'Other')),\n" +
                 "\t`Accommodation`\tTEXT,\n" +
                 "\t`AccommodationRank`\tNUMERIC,\n" +
@@ -155,14 +156,14 @@ public class DBconnection {
         return false;
     }
 
-    public int insertPayment(User buyer, Vacation vacation, String method){
+    public int insertPayment(String buyer, Vacation vacation, String method){
         String insertQ = "INSERT INTO Payment(PaymentID, VacationID ,Buyer, Seller, Amount, Method) VALUES(?,?,?,?,?,?)";
         int id=getPaymentID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setInt(1, id);
             pstmt.setInt(2, vacation.getId());
-            pstmt.setString(3, buyer.getUsername());
-            pstmt.setString(4, vacation.getAdvertiser().getUsername());
+            pstmt.setString(3, buyer);
+            pstmt.setString(4, vacation.getAdvertiser());
             pstmt.setDouble(5, vacation.getPrice());
             pstmt.setString(6, method);
             pstmt.executeUpdate();
@@ -175,11 +176,11 @@ public class DBconnection {
     }
 
     public int insertVacation(Vacation vacation){
-        String insertQ = "INSERT INTO Vacation(VacationID, Advertiser, Airline, Price, ToDestinationDeparture, Luggage, NTickets, ReturnFlightDeparture, Destination, TicketType, VacationType, Accommodation, AccommodationRank) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertQ = "INSERT INTO Vacations(VacationID, Advertiser, Airline, Price, ToDestinationDeparture, Luggage, NTickets, ReturnFlightDeparture, Destination, TicketType, VacationType, Accommodation, AccommodationRank) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         int id=getVacationID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setInt(1, id);
-            pstmt.setString(2, vacation.getAdvertiser().getUsername());
+            pstmt.setString(2, vacation.getAdvertiser());
             pstmt.setString(3, vacation.getAirline());
             pstmt.setDouble(4, vacation.getPrice());
             pstmt.setDate(5, vacation.getToDestinationDeparture());
@@ -195,7 +196,7 @@ public class DBconnection {
             //System.out.println("Insert Complete");
             return id;
         } catch (SQLException e) {
-            //System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
             return -1;
         }
     }

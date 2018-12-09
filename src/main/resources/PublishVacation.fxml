@@ -44,7 +44,7 @@
                 <Label text="Accommodation Ranking" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                 <Label text="Max Luggage Weight" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
                 <Label text="Price" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="10" />
-                <TextField fx:id="destination" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                <TextField fx:id="price" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                 <DatePicker fx:id="dfdate" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <DatePicker fx:id="dbdate" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                 <ChoiceBox fx:id="numTickets" prefHeight="39.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -54,7 +54,7 @@
                 <TextField fx:id="accName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                 <ChoiceBox fx:id="accRank" prefHeight="39.0" prefWidth="308.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                 <TextField fx:id="luggWeight" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-            <TextField GridPane.columnIndex="1" />
+            <TextField fx:id="destination" GridPane.columnIndex="1" />
             </children>
             <BorderPane.margin>
                 <Insets top="80.0" />
