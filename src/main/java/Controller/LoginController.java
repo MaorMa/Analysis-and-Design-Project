@@ -11,8 +11,5 @@ public class LoginController extends AController{
         }else
             return false;
     }
-
-//    public Model getCurrentModel(){
-//        return this.myModel;
-//    }
+    
 }
