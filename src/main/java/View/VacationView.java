@@ -41,10 +41,17 @@ public class VacationView extends AView implements Initializable {
     }
 
     public void purchaseVac(ActionEvent actionEvent) {
-        publishVac();
+        loginPrompt();
     }
 
     public void publishVac() {
+        loginPrompt();
+    }
+
+    /**
+     * Method to log you in when not logged in and trying to purchase\publish
+     */
+    private void loginPrompt(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("You aren't logged in");
         alert.setHeaderText("You must log in to Publish a Vacation");
