@@ -3,7 +3,7 @@ package Model;
 import java.sql.Date;
 
 /**
- * Not created by Maor. He's just an assistance.
+ * Not created by Maor. He's just an assistant.
  */
 public class Vacation {
     int id, accommodationRank, NTickets;

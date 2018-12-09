@@ -1,5 +1,6 @@
 package View;
 
+import Controller.VacationLoggedInController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,12 +41,13 @@ public class VacationView extends AView implements Initializable {
         stage.show();
     }
 
-    public void purchaseVac(ActionEvent actionEvent) {
+    public void purchaseVac(ActionEvent actionEvent) throws InterruptedException {
         loginPrompt();
     }
 
     public void publishVac() {
         loginPrompt();
+
     }
 
     /**

@@ -54,7 +54,22 @@ public class VacationLoggedInView extends AView implements Initializable{
     public void purchaseVac(ActionEvent actionEvent) {
     }
 
-    public void publishVac(ActionEvent actionEvent) {
+    public void publishVac(ActionEvent actionEvent) throws InterruptedException {
+        FXMLLoader fxmlLoader=new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/PublishVacation.fxml"));
+        Scene scene=null;
+        try{
+            scene=new Scene(fxmlLoader.load(), 900, 600);
+            scenes.put("Publish",scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage=new Stage();
+        stage.setTitle("Publish Vacation");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        Thread.sleep(250);
+        stage.show();
     }
 
     public void searchVac(ActionEvent actionEvent) {
