@@ -1,17 +1,23 @@
 package View;
 
+import Controller.AController;
+import Controller.PublishVacationController;
 import Model.Vacation;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 public class PublishVacationView extends AView implements Initializable {
+    private PublishVacationController publishVacationController = new PublishVacationController();
+    public javafx.scene.control.Button publishButton;
 
         @FXML
         public javafx.scene.control.TextField destination;
@@ -24,36 +30,37 @@ public class PublishVacationView extends AView implements Initializable {
         public javafx.scene.control.TextField accName;
         public javafx.scene.control.ChoiceBox accRank;
         public javafx.scene.control.TextField luggWeight;
+        public javafx.scene.control.TextField price;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             numTickets.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
             numTickets.setValue(1);
-//         numTickets = new ChoiceBox(FXCollections.observableArrayList(
-//                "1", "2", "3", "4", "5", "6", "7", "8", "9", "10")
-//        );
-        ticketType.getItems().addAll("1-12","13-60","60-100");
-        ticketType.setValue("1-12");
-//        ticketType = new ChoiceBox(FXCollections.observableArrayList(
-//                "1-12","13-60","60-100")
-//        );
-        vacType.getItems().addAll("Urban Vacation","Vacation in Nature", "Beach Vacation",
-                "Family Vacation","Cheap Vacation", "Ski Vacation", "Romantic  Vacation");
-        vacType.setValue("Urban Vacation");
-//        vacType = new ChoiceBox(FXCollections.observableArrayList(
-//                "Urban Vacation","Vacation in Nature", "Beach Vacation",
-//                "Family Vacation","Cheap Vacation", "Ski Vacation", "Romantic  Vacation" ));
+
+        ticketType.getItems().addAll("Adult","Child","Baby");
+        ticketType.setValue("Adult");
+
+        vacType.getItems().addAll("Urban","Exotic", "Other");
+        vacType.setValue("Urban");
+
         accRank.getItems().addAll(1,2,3,4,5);
         accRank.setValue(1);
-//        accRank = new ChoiceBox(FXCollections.observableArrayList("1","2","3","4","5"));
     }
 
-    public void publishVac () {
+    public void publishVac () throws InterruptedException {
         String destinationS = destination.getText();
         String accNameS = accName.getText();
         String luggWeightS = luggWeight.getText();
         String airlineS = airline.getText();
         String dfdateS, dbdateS;
+        double priced=0;
+        boolean isDouble;
+        try {
+            priced = Double.parseDouble(price.getText());
+            isDouble=true;
+        }catch(Exception e){
+            isDouble=false;
+        }
         if(dfdate.getValue() != null)//check if date is null
         {
             dfdateS = dfdate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));//problem when empty!
@@ -76,7 +83,7 @@ public class PublishVacationView extends AView implements Initializable {
         if(vacTypeS==null)
             vacTypeS="";
         int accRankS = (int) accRank.getValue();
-        if(destinationS.isEmpty() || accNameS.isEmpty() || luggWeightS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
+        if(!isDouble || destinationS.isEmpty() || accNameS.isEmpty() || luggWeightS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
                 dbdateS.isEmpty() || ticketTypeS.isEmpty() || vacTypeS.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
@@ -86,7 +93,27 @@ public class PublishVacationView extends AView implements Initializable {
             alert.showAndWait();
         }
         else{
-//            Vacation vacation = new Vacation();
+            Vacation vacation = new Vacation(numTicketsS,publishVacationController.getUsername(),airlineS,destinationS,
+                    ticketTypeS,vacTypeS,priced,stringToDate(dfdateS));
+            vacation.setId(publishVacationController.addVacation(vacation));
+            if(vacation.getId()!=-1){
+                Thread.sleep(500);
+                Stage stage = (Stage) publishButton.getScene().getWindow();
+                stage.close();
+            }
         }
+    }
+
+    /**
+     *
+     * @param stringDate - string date from the date controller
+     * @return -
+     */
+    private Date stringToDate(String stringDate){
+        String[] splitDate = stringDate.split("-");
+        int year = Integer.parseInt(splitDate[0]);
+        int month = Integer.parseInt(splitDate[1]);
+        int day = Integer.parseInt(splitDate[2]);
+        return new Date(year,month,day);
     }
 }

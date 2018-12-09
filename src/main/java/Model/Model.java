@@ -69,6 +69,10 @@ public class Model {
         dBconnection.removeUser(username);
     }
 
+    public int publicVac(Vacation vacation){
+        return dBconnection.insertVacation(vacation);
+    }
+
     public boolean checkIfExists(String username) {
         if(this.dBconnection.readUser(username) == null){
             if(username.equals(current_user))
