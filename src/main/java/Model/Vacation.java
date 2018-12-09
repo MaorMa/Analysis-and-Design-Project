@@ -12,18 +12,20 @@ public class Vacation {
     double price;
     Date toDestinationDeparture, returnFlightDeparture;
 
-    public Vacation(int id, int NTickets, User advertiser, String airline,
-                    String destination, String ticketType, String vacationType,
-                    double price, Date toDestinationDeparture) {
+    public Vacation(int id, int accommodationRank, int NTickets, User advertiser, String airline, String luggage, String destination, String ticketType, String vacationType, String accommodation, double price, Date toDestinationDeparture, Date returnFlightDeparture) {
         this.id = id;
+        this.accommodationRank = accommodationRank;
         this.NTickets = NTickets;
         this.advertiser = advertiser;
         this.airline = airline;
+        this.luggage = luggage;
         this.destination = destination;
         this.ticketType = ticketType;
         this.vacationType = vacationType;
+        this.accommodation = accommodation;
         this.price = price;
         this.toDestinationDeparture = toDestinationDeparture;
+        this.returnFlightDeparture = returnFlightDeparture;
     }
 
     public int getId() {

@@ -2,11 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.VacationView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.VacationView">
    <top>
       <FlowPane prefHeight="45.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
@@ -15,7 +17,26 @@
       </FlowPane>
    </top>
    <center>
-      <ScrollPane prefHeight="294.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
+      <ScrollPane prefHeight="294.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+         <content>
+            <TableView fx:id="VactationView" maxWidth="1250.0" prefWidth="1250.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="VacationID" />
+                <TableColumn prefWidth="75.0" text="Advertiser" />
+                 <TableColumn prefWidth="75.0" text="Airline" />
+                 <TableColumn prefWidth="65.0" text="Price" />
+                 <TableColumn prefWidth="160.0" text="ToDestinationDeparture" />
+                 <TableColumn prefWidth="75.0" text="Luggage" />
+                 <TableColumn prefWidth="75.0" text="NTickets" />
+                 <TableColumn prefWidth="160.0" text="ReturnFlightDeparture" />
+                 <TableColumn prefWidth="75.0" text="Destination" />
+                 <TableColumn prefWidth="90.0" text="TicketType" />
+                 <TableColumn prefWidth="90.0" text="VacationType" />
+                 <TableColumn prefWidth="100.0" text="Accommodation" />
+                 <TableColumn prefWidth="130.0" text="AccommodationRank" />
+              </columns>
+            </TableView>
+         </content></ScrollPane>
    </center>
    <bottom>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">

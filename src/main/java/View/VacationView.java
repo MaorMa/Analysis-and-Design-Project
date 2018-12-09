@@ -38,7 +38,7 @@ public class VacationView extends AView implements Initializable {
         stage.setTitle("Login");
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.show();//
+        stage.show();
     }
 
     public void purchaseVac(ActionEvent actionEvent) throws InterruptedException {

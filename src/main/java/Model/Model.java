@@ -2,6 +2,9 @@ package Model;
 
 import javafx.scene.control.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Created by Maor on 10/24/2018.
  */
@@ -75,5 +78,9 @@ public class Model {
         else{
             return true;
         }
+    }
+
+    public HashMap<Integer, Vacation> getVacations() {
+        return this.dBconnection.readVacations();
     }
 }

@@ -5,6 +5,8 @@ package Model;
  */
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 //todo check db file
 public class DBconnection {
@@ -223,5 +225,9 @@ public class DBconnection {
 
     private int getVacationID(){
         return ++vacationID;
+    }
+
+    public HashMap<Integer, Vacation> readVacations() {
+        return null;
     }
 }

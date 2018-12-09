@@ -86,7 +86,7 @@ public class PublishVacationView extends AView implements Initializable {
             alert.showAndWait();
         }
         else{
-            //Vacation vacation = new Vacation();
+//            Vacation vacation = new Vacation();
         }
     }
 }
