@@ -4,13 +4,14 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PurchaseVacationView">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PurchaseVacationView">
     <center>
         <GridPane maxHeight="385.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <columnConstraints>
@@ -26,14 +27,18 @@
                 <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label text="Card Type" textFill="BLACK" GridPane.halignment="CENTER" />
-                <Label text="Card Number" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                <Label text="Expiration Date" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                <Label text="CCV" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                <DatePicker fx:id="expDate" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="cardType" prefHeight="36.0" prefWidth="250.0" GridPane.columnIndex="1" />
-            <TextField fx:id="cardNumber" prefHeight="88.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="CCV" prefHeight="88.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                <Label text="Payment Method" textFill="BLACK" GridPane.halignment="CENTER" />
+                <Label fx:id="cardNumberLabel" text="Card Number" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Label fx:id="emailLabel" text="E-mail" textFill="BLACK" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Label fx:id="expDateLabel" text="Expiration Date" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Label fx:id="pwLabel" text="Password" textFill="BLACK" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                <Label fx:id="ccvLabel" text="CCV" textFill="BLACK" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                <ChoiceBox fx:id="cardType" onContextMenuRequested="#changeInfoReq" prefHeight="36.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                <TextField fx:id="cardNumberValue" prefHeight="88.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <TextField fx:id="emailValue" prefHeight="88.0" prefWidth="250.0" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <DatePicker fx:id="expDateValue" editable="false" prefHeight="25.0" prefWidth="304.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                <TextField fx:id="CCVvalue" prefHeight="88.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <PasswordField fx:id="pwValue" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             </children>
             <BorderPane.margin>
             </BorderPane.margin>
