@@ -1,6 +1,8 @@
 package View;
 
 import Controller.PublishVacationController;
+import Controller.VacationsController;
+import Controller.purchaseVacationController;
 import Model.DBconnection;
 import Model.Vacation;
 import com.sun.javafx.stage.StageHelper;
@@ -12,10 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-
-import java.sql.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +25,11 @@ public abstract class AView {
     static int purchaseNumber = 0;
     static boolean PaymentApprovement = false;
     static HashMap<String,String> publishData = new HashMap<>();
-    static DBconnection db = new DBconnection();
     protected static HashMap<Integer, Vacation> vacationsList;
     protected PublishVacationController publishVacationController = new PublishVacationController();
+    protected VacationsController vacationsController = new VacationsController();
+    protected purchaseVacationController purchaseVacationController = new purchaseVacationController();
+
 
     @FXML
     protected javafx.scene.control.TableView VacationView = new TableView();
@@ -37,7 +38,7 @@ public abstract class AView {
         /**
          * test
          */
-        vacationsList = db.readVacations();
+        vacationsList = vacationsController.getVacations();
         if (vacationsList != null) {
             TableColumn<Map.Entry<Integer, Vacation>, String> column1 = new TableColumn<>("VacationsID");
             column1.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getId() + ""));
@@ -121,13 +122,13 @@ public abstract class AView {
         }
         return null;
     }
-//
+
     public void setPurchaseNumber(Integer purchaseNumber) {
         this.purchaseNumber = purchaseNumber.intValue();
     }
 
     public void removeFromTableView(int purchaseNumber) {
-        this.vacationsList.remove(purchaseNumber);
+        purchaseVacationController.removeVacation(purchaseNumber);
     }
 
     public HashMap<Integer, Vacation> getVacationList() {
