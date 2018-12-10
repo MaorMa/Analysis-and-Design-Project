@@ -35,12 +35,6 @@ public class VacationLoggedInView extends AView implements Initializable {
         currentuser.setText("Hello " + AController.getCurrentUser());
     }
 
-//    @Override
-//    public void initialize(URL location, ResourceBundle resources) {
-//        setTitle();
-//        vacationLogged = super.updateTableView();
-//    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTitle();
@@ -126,4 +120,5 @@ public class VacationLoggedInView extends AView implements Initializable {
         Thread.sleep(250);
         mainStage.setScene(scenes.get("VacationView"));
     }
+
 }

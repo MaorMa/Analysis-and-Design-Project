@@ -38,18 +38,18 @@ public class LoginView extends AView  implements Initializable {
 
         boolean valid = !username.getText().isEmpty() && !password.getText().isEmpty() && loginController.checkValidUser(username.getText(),password.getText());
         if(valid){
-            FXMLLoader fxmlLoader=new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/VacationsLoggedIn.fxml"));
-            Scene scene=null;
-            try{
-                scene=new Scene(fxmlLoader.load(), 1250, 600);
-                scenes.put("VacationsLoggedIn",scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            mainStage = getStage("Vacation4U");
-            Thread.sleep(1000);
-            mainStage.setScene(scene);
+//            FXMLLoader fxmlLoader=new FXMLLoader();
+//            fxmlLoader.setLocation(getClass().getResource("/VacationsLoggedIn.fxml"));
+//            Scene scene=null;
+//            try{
+//                scene=new Scene(fxmlLoader.load(), 1250, 600);
+//                scenes.put("VacationsLoggedIn",scene);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            mainStage = getStage("Vacation4U");
+//            Thread.sleep(1000);
+//            mainStage.setScene(scene);
             closeStage("Login");
         }
         else if(username.getText().isEmpty()){
