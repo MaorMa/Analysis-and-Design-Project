@@ -101,9 +101,14 @@ public class Model {
     public void removeVacations(int id){
         dBconnection.removeVacation(id);
     }
-
-    public boolean confirmPayment(int vacationID, String buyer){
-
-        return false;
+    //
+    public boolean confirmPayment(int vacationID, String buyer,String method){
+        try{
+        Vacation v=dBconnection.readVacation(vacationID);
+        dBconnection.insertPayment(buyer,v,method);}
+        catch (Exception e){
+            return false;
+        }
+        return true;
     }
 }
