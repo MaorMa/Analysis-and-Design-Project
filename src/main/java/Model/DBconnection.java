@@ -255,6 +255,7 @@ public class DBconnection {
             vacation.setToDestinationDeparture(resultSet.getString("ToDestinationDeparture"));
             vacation.setAccommodation(accommodation);
             vacation.setAccommodationRank(accommodationRank);
+            vacation.setReturnFlightDeparture(returnFlight);
             //System.out.println("Insert Complete");
             return vacation;
         } catch (SQLException e) {
@@ -283,10 +284,10 @@ public class DBconnection {
                 String accommodation = resultSet.getString("Accommodation");
                 int accommodationRank = resultSet.getInt("AccommodationRank");
                 Vacation vacation = new Vacation(NTickets, advertiser, airline, destination,
-                        ticketType, vacationType, price, resultSet.getString("ToDestinationDeparture"));
+                        ticketType, vacationType, price, toDestination);
                 vacation.setId(id);
                 vacation.setLuggage(luggage);
-                vacation.setReturnFlightDeparture("ReturnFlightDeparture");
+                vacation.setReturnFlightDeparture(returnFlight);
                 vacation.setAccommodation(accommodation);
                 vacation.setAccommodationRank(accommodationRank);
                 ans.put(id, vacation);
@@ -302,7 +303,7 @@ public class DBconnection {
 
     public void removeVacation (int id){
         String removeQ = "DELETE FROM Vacations\n" +
-                "WHERE VacationID='" + id + "';";
+                "WHERE VacationID=" + id + ";";
         try (PreparedStatement pstmt = conn.prepareStatement(removeQ)) {
             pstmt.execute();
             //System.out.println("Delete vacation Complete");

@@ -75,6 +75,10 @@ public class PublishVacationView extends AView implements Initializable {
         else {
             dbdateS = "";//if date is null - set to empty'
         }
+
+        if(luggWeightS==null){
+            luggWeightS="";
+        }
         int numTicketsS = (int) numTickets.getValue();
         String ticketTypeS = (String) ticketType.getValue();
         if(ticketTypeS==null)
@@ -84,7 +88,7 @@ public class PublishVacationView extends AView implements Initializable {
             vacTypeS="";
         int accRankS = (int) accRank.getValue();
         if(!isDouble || destinationS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
-                dbdateS.isEmpty() || ticketTypeS.isEmpty() || vacTypeS.isEmpty()){
+                ticketTypeS.isEmpty() || vacTypeS.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
             alert.setHeaderText("Error while filling in the Vacation Information");
@@ -95,7 +99,11 @@ public class PublishVacationView extends AView implements Initializable {
         else{
             Vacation vacation = new Vacation(numTicketsS,publishVacationController.getUsername(),airlineS,destinationS,
                     ticketTypeS,vacTypeS,priced,dfdateS);
-            if(accNameS.isEmpty())//add accomidation name
+            vacation.setReturnFlightDeparture(dbdateS);
+            if(!luggWeightS.equals("")){
+                vacation.setLuggage(luggWeightS);
+            }
+            if(!accNameS.isEmpty())//add accomidation name
                 vacation.setAccommodation(accNameS);
             if(accRankS!=0)//add accomidation rank
                 vacation.setAccommodationRank(accRankS);

@@ -94,7 +94,10 @@ public abstract class AView {
     }
 
     protected void detectClickAndSet(){
-        VacationView.setOnMouseClicked(event -> setPurchaseNumber((Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey()));
+        Integer current = (Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey();
+        if(current!=null) {
+            VacationView.setOnMouseClicked(event -> setPurchaseNumber(current));
+        }
     }
 
     /**
