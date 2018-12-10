@@ -24,11 +24,37 @@ public class DBconnection {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:res/Users.db");
             createTables();
+            updatePaymentID();
+            updateVacationID();
         } catch ( Exception e ) {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.exit(0);
         }
         //System.out.println("Connection established successfully");
+    }
+
+    private void updateVacationID(){
+        String selectQ = "SELECT VacationID FROM Vacations ORDER BY VacationID DESC";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(selectQ)){
+            if(rs.next())
+                vacationID=rs.getInt("VacationID");
+        } catch (SQLException e) {
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void updatePaymentID(){
+        String selectQ = "SELECT PaymentID FROM Payments ORDER BY PaymentID DESC";
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(selectQ)){
+            if(rs.next())
+                paymentID=rs.getInt("VacationID");
+        } catch (SQLException e) {
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void createTables(){
@@ -58,18 +84,6 @@ public class DBconnection {
                 "\tPRIMARY KEY(`VacationID`), " +
                 "FOREIGN KEY(`Advertiser`) REFERENCES Users(`UserName`)\n" +
                 ");";
-/*        String createPayments="CREATE TABLE IF NOT EXISTS `Payments` (\n" +
-                "\t`PaymentID`\tNUMERIC NOT NULL,\n" +
-                "\t`VacationID`\tNUMERIC NOT NULL,\n" +
-                "\t`Buyer`\tTEXT NOT NULL,\n" +
-                "\t`Seller`\tTEXT NOT NULL,\n" +
-                "\t`Amount`\tNUMERIC NOT NULL,\n" +
-                "\t`Method`\tNOT NULL CHECK (Method IN ('Paypal', 'Visa')),\n" +
-                "\tPRIMARY KEY(`PaymentID`)\n " +
-                "FOREIGN KEY(`VacationID`) REFERENCES Vacations(`VacationID`)\n" +
-                "FOREIGN KEY(`Buyer`) REFERENCES Users(`UserName`)\n" +
-                "FOREIGN KEY(`Seller`) REFERENCES Users(`UserName`)\n" +
-                ");";*/
         String createPayments="CREATE TABLE IF NOT EXISTS `Payments` (\n" +
                 "\t`PaymentID`\tNUMERIC NOT NULL,\n" +
                 "\t`VacationID`\tNUMERIC NOT NULL,\n" +
@@ -178,15 +192,15 @@ public class DBconnection {
         return false;
     }
 
-    public int insertPayment(User buyer, Vacation vacation, String method){
+    public int insertPayment(String buyer, Vacation vacation, String method){
         String insertQ = "INSERT INTO Payments(PaymentID, VacationID ,Buyer, Seller, Amount, Method) VALUES(?,?,?,?,?,?)";
         int id=getPaymentID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            System.out.println(id+", "+vacation.getId()+", "+buyer.getUsername()+", "+vacation.getAdvertiser().getUsername()+", "+vacation.getPrice()+", "+method);
+            System.out.println(id+", "+vacation.getId()+", "+buyer+", "+vacation.getAdvertiser()+", "+vacation.getPrice()+", "+method);
             pstmt.setInt(1, id);
             pstmt.setInt(2, vacation.getId());
-            pstmt.setString(3, buyer.getUsername());
-            pstmt.setString(4, vacation.getAdvertiser().getUsername());
+            pstmt.setString(3, buyer);
+            pstmt.setString(4, vacation.getAdvertiser());
             pstmt.setDouble(5, vacation.getPrice());
             pstmt.setString(6, method.toUpperCase());
             pstmt.executeUpdate();
@@ -204,7 +218,7 @@ public class DBconnection {
         int id=getVacationID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
             pstmt.setInt(1, id);
-            pstmt.setString(2, vacation.getAdvertiser().getUsername());
+            pstmt.setString(2, vacation.getAdvertiser());
             pstmt.setString(3, vacation.getAirline());
             pstmt.setDouble(4, vacation.getPrice());
             pstmt.setDate(5, vacation.getToDestinationDeparture());
@@ -230,7 +244,7 @@ public class DBconnection {
         String readQ = "SELECT * FROM Vacations WHERE VacationID=\'"+id+"\'";
         try (PreparedStatement pstmt = conn.prepareStatement(readQ)) {
             ResultSet resultSet=pstmt.executeQuery();
-            User advertiser=readUser(resultSet.getString("Advertiser"));
+            String advertiser=resultSet.getString("Advertiser");
             String airline=resultSet.getString("Airline");
             double price=resultSet.getDouble("Price");
             Date toDestination=resultSet.getDate("ToDestinationDeparture");
@@ -242,9 +256,12 @@ public class DBconnection {
             String vacationType= resultSet.getString("VacationType");
             String accommodation=resultSet.getString("Accommodation");
             int accommodationRank=resultSet.getInt("AccommodationRank");
-            Vacation vacation=new Vacation(id, NTickets, advertiser, airline, destination,
-                    ticketType, vacationType,price,toDestination);
-
+            Vacation vacation=new Vacation(NTickets, advertiser, airline, destination, ticketType, vacationType, price, toDestination);
+            vacation.setId(resultSet.getInt("VacationID"));
+            vacation.setLuggage(luggage);
+            vacation.setReturnFlightDeparture(returnFlight);
+            vacation.setAccommodation(accommodation);
+            vacation.setAccommodationRank(accommodationRank);
             //System.out.println("Insert Complete");
             return vacation;
         } catch (SQLException e) {
@@ -260,7 +277,7 @@ public class DBconnection {
             HashMap<Integer, Vacation> ans=new HashMap<>();
             while(resultSet.next()) {
                 int id=resultSet.getInt("VacationID");
-                User advertiser = readUser(resultSet.getString("Advertiser"));
+                String advertiser = resultSet.getString("Advertiser");
                 String airline = resultSet.getString("Airline");
                 double price = resultSet.getDouble("Price");
                 Date toDestination = resultSet.getDate("ToDestinationDeparture");
@@ -272,8 +289,13 @@ public class DBconnection {
                 String vacationType = resultSet.getString("VacationType");
                 String accommodation = resultSet.getString("Accommodation");
                 int accommodationRank = resultSet.getInt("AccommodationRank");
-                Vacation vacation = new Vacation(id, NTickets, advertiser, airline, destination,
+                Vacation vacation = new Vacation(NTickets, advertiser, airline, destination,
                         ticketType, vacationType, price, toDestination);
+                vacation.setId(id);
+                vacation.setLuggage(luggage);
+                vacation.setReturnFlightDeparture(returnFlight);
+                vacation.setAccommodation(accommodation);
+                vacation.setAccommodationRank(accommodationRank);
                 ans.put(id, vacation);
             }
             //System.out.println("Insert Complete");
@@ -292,7 +314,7 @@ public class DBconnection {
             pstmt.execute();
             //System.out.println("Delete vacation Complete");
         } catch (SQLException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -305,7 +327,7 @@ public class DBconnection {
     }
 
     public static void main(String[] args) {
-        try {
+        /*try {
             DBconnection db = new DBconnection();
             User buyer = new User("aviv", "1", "04/11/1990", "a", "a", "ofakim"),
                     seller = new User("maor", "elba", "09/01/1993", "maor", "ma", "beer sheva");
@@ -314,7 +336,6 @@ public class DBconnection {
             Vacation v = new Vacation(-1, 3, seller, "pegasus", "romania", "adult", "urban", 150, new Date(2018, 12, 10));
             Vacation v1 = new Vacation(-1, 3, seller, "Elal", "romania", "baby", "urban", 150, new Date(2018, 12, 10));
             Vacation v2 = new Vacation(-1, 3, seller, "arkia", "romania", "child", "exotic", 150, new Date(2018, 12, 10));
-
             db.insertVacation(v);
             db.insertVacation(v1);
             db.insertVacation(v2);
@@ -324,6 +345,6 @@ public class DBconnection {
             //System.out.println(db.insertPayment(buyer, db.readVacation(1), "visa"));
         }catch (Exception e){
             e.printStackTrace();
-        }
+        }*/
     }
 }

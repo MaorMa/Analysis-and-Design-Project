@@ -42,7 +42,7 @@ public class LoginView extends AView  implements Initializable {
             fxmlLoader.setLocation(getClass().getResource("/VacationsLoggedIn.fxml"));
             Scene scene=null;
             try{
-                scene=new Scene(fxmlLoader.load(), 900, 600);
+                scene=new Scene(fxmlLoader.load(), 1250, 600);
                 scenes.put("VacationsLoggedIn",scene);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -86,7 +86,7 @@ public class LoginView extends AView  implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/Create.fxml"));
         Scene scene=null;
         try{
-            scene=new Scene(fxmlLoader.load(), 900, 600);
+            scene=new Scene(fxmlLoader.load(), 1250, 600);
         } catch (IOException e) {
             e.printStackTrace();
         }

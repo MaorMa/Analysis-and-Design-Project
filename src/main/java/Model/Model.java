@@ -11,6 +11,7 @@ import java.util.HashMap;
 public class Model {
     private DBconnection dBconnection;
     protected String current_user;
+    protected int VacationPurchase = 0;
 
     public Model(){
         dBconnection = new DBconnection();
@@ -53,6 +54,14 @@ public class Model {
         }
     }
 
+    public int getVacationPurchase(){
+        return this.VacationPurchase;
+    }
+
+    public void setVacationPurchase(int number){
+        this.VacationPurchase = number;
+    }
+
     public User getUserInfo(String username){
         return dBconnection.readUser(username);
     }
@@ -69,7 +78,7 @@ public class Model {
         dBconnection.removeUser(username);
     }
 
-    public int publicVac(Vacation vacation){
+    public int publishVac(Vacation vacation){
         return dBconnection.insertVacation(vacation);
     }
 
@@ -85,6 +94,7 @@ public class Model {
     }
 
     public HashMap<Integer, Vacation> getVacations() {
-        return this.dBconnection.readVacations();
+        return null;
+//        return this.dBconnection.readVacations();
     }
 }

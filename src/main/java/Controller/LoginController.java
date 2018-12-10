@@ -1,7 +1,5 @@
 package Controller;
 
-import Model.Model;
-
 public class LoginController extends AController{
 
     public boolean checkValidUser(String username , String password) {

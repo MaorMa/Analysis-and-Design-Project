@@ -1,6 +1,8 @@
 package View;
 
-import Controller.VacationLoggedInController;
+import Controller.VacationsController;
+import Model.User;
+import Model.Vacation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,17 +12,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VacationView extends AView implements Initializable {
+
+    /**
+     * Fields
+     */
+    private VacationsController vacationsController = new VacationsController();
+
+    @FXML
     public javafx.scene.control.Button loginButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        super.updateTableView();
     }
 
     @FXML
@@ -30,7 +41,7 @@ public class VacationView extends AView implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/Login.fxml"));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 900, 600);
+            scene = new Scene(fxmlLoader.load(), 1200, 600);
             scenes.put("Login", scene);
         } catch (IOException e) {
             e.printStackTrace();
@@ -72,7 +83,8 @@ public class VacationView extends AView implements Initializable {
         }
     }
 
-        public void searchVac (ActionEvent actionEvent){
+
+    public void searchVac (ActionEvent actionEvent){
             TextInputDialog dialog = new TextInputDialog("Destination");
             dialog.setTitle("Search for a Destination");
             dialog.setHeaderText("Write the Destination you are looking for");
@@ -81,6 +93,8 @@ public class VacationView extends AView implements Initializable {
             Optional<String> result = dialog.showAndWait();
             System.out.println(result.get());
         }
+    public void publishVac(ActionEvent actionEvent) {
+        loginPrompt();
     }
 
-
+}

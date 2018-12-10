@@ -6,30 +6,30 @@ import java.sql.Date;
  * Not created by Maor. He's just an assistant.
  */
 public class Vacation {
-    int id, accommodationRank, NTickets;
-    User advertiser;
-    String airline, luggage, destination, ticketType, vacationType, accommodation;
+    int id=-1, accommodationRank, NTickets;
+    String airline, luggage, destination, ticketType, vacationType, accommodation, advertiser;
     double price;
     Date toDestinationDeparture, returnFlightDeparture;
 
-    public Vacation(int id, int accommodationRank, int NTickets, User advertiser, String airline, String luggage, String destination, String ticketType, String vacationType, String accommodation, double price, Date toDestinationDeparture, Date returnFlightDeparture) {
-        this.id = id;
-        this.accommodationRank = accommodationRank;
+    public Vacation(int NTickets, String advertiser, String airline,
+                    String destination, String ticketType, String vacationType,
+                    double price, Date toDestinationDeparture) {
         this.NTickets = NTickets;
         this.advertiser = advertiser;
         this.airline = airline;
-        this.luggage = luggage;
         this.destination = destination;
         this.ticketType = ticketType;
         this.vacationType = vacationType;
-        this.accommodation = accommodation;
         this.price = price;
-        this.toDestinationDeparture = toDestinationDeparture;
-        this.returnFlightDeparture = returnFlightDeparture;
+        this.toDestinationDeparture = new Date(toDestinationDeparture.getYear()-1900, toDestinationDeparture.getMonth()-1, toDestinationDeparture.getDay());
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id=id;
     }
 
     public int getAccommodationRank() {
@@ -48,7 +48,7 @@ public class Vacation {
         this.NTickets = NTickets;
     }
 
-    public User getAdvertiser() {
+    public String getAdvertiser() {
         return advertiser;
     }
 

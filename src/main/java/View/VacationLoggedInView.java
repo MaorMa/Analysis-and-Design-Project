@@ -1,9 +1,12 @@
 package View;
 
 import Controller.AController;
-import Controller.LoginController;
 import Controller.VacationLoggedInController;
-import Controller.VacationsController;
+import Model.User;
+import Model.Vacation;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,67 +14,99 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class VacationLoggedInView extends AView implements Initializable{
+public class VacationLoggedInView extends AView implements Initializable {
 
     private VacationLoggedInController vacationLoggedInController = new VacationLoggedInController();
 
     @FXML
     public javafx.scene.control.Label currentuser;
+//    protected javafx.scene.control.TableView vacationLogged = new TableView();
 
-    public void setTitle(){
+    public void setTitle() {
         currentuser.setText("Hello " + AController.getCurrentUser());
     }
+
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        setTitle();
+//        vacationLogged = super.updateTableView();
+//    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setTitle();
+        super.updateTableView();
     }
 
     public void Account(ActionEvent actionEvent) throws InterruptedException {
-        FXMLLoader fxmlLoader=new FXMLLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/Home.fxml"));
-        Scene scene=null;
-        try{
-            scene=new Scene(fxmlLoader.load(), 900, 600);
-            scenes.put("Account",scene);
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1200, 600);
+            scenes.put("Account", scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage=new Stage();
+        Stage stage = new Stage();
         stage.setTitle("Account");
         stage.setScene(scene);
         stage.setResizable(false);
         Thread.sleep(1000);
         stage.show();
-
     }
 
-    public void purchaseVac(ActionEvent actionEvent) {
-    }
-
-    public void publishVac(ActionEvent actionEvent) throws InterruptedException {
-        FXMLLoader fxmlLoader=new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/PublishVacation.fxml"));
-        Scene scene=null;
-        try{
-            scene=new Scene(fxmlLoader.load(), 900, 600);
-            scenes.put("Publish",scene);
+    public void purchaseVac(ActionEvent actionEvent) throws InterruptedException {
+//        initial();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/PurchaseVacation.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1200, 600);
+            scenes.put("Purchase", scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Stage stage=new Stage();
+        Stage stage = new Stage();
+        stage.setTitle("Purchase Vacation");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.showAndWait();
+        if(AView.PaymentApprovement){
+            super.detectClickAndSet();
+            super.removeFromTableView(AView.purchaseNumber);
+            super.updateTableView();
+        }
+    }
+
+    public void publishVac(ActionEvent actionEvent) throws InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/PublishVacation.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1200, 600);
+            scenes.put("Publish", scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
         stage.setTitle("Publish Vacation");
         stage.setScene(scene);
         stage.setResizable(false);
         Thread.sleep(250);
-        stage.show();
+        stage.showAndWait();
+        if(AView.publishData.size() > 0){
+            Vacation v = new Vacation(1, "2", "2", "u", "s", "adult", 125, new Date(02 / 12));
+        }
     }
 
     public void searchVac(ActionEvent actionEvent) {

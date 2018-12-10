@@ -19,23 +19,23 @@ public class PublishVacationView extends AView implements Initializable {
     private PublishVacationController publishVacationController = new PublishVacationController();
     public javafx.scene.control.Button publishButton;
 
-        @FXML
-        public javafx.scene.control.TextField destination;
-        public javafx.scene.control.DatePicker dfdate;
-        public javafx.scene.control.DatePicker dbdate;
-        public javafx.scene.control.ChoiceBox numTickets;
-        public javafx.scene.control.ChoiceBox ticketType;
-        public javafx.scene.control.ChoiceBox vacType;
-        public javafx.scene.control.TextField airline;
-        public javafx.scene.control.TextField accName;
-        public javafx.scene.control.ChoiceBox accRank;
-        public javafx.scene.control.TextField luggWeight;
-        public javafx.scene.control.TextField price;
+    @FXML
+    public javafx.scene.control.TextField destination;
+    public javafx.scene.control.DatePicker dfdate;
+    public javafx.scene.control.DatePicker dbdate;
+    public javafx.scene.control.ChoiceBox numTickets;
+    public javafx.scene.control.ChoiceBox ticketType;
+    public javafx.scene.control.ChoiceBox vacType;
+    public javafx.scene.control.TextField airline;
+    public javafx.scene.control.TextField accName;
+    public javafx.scene.control.ChoiceBox accRank;
+    public javafx.scene.control.TextField luggWeight;
+    public javafx.scene.control.TextField price;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            numTickets.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
-            numTickets.setValue(1);
+        numTickets.getItems().addAll(1,2,3,4,5,6,7,8,9,10);
+        numTickets.setValue(1);
 
         ticketType.getItems().addAll("Adult","Child","Baby");
         ticketType.setValue("Adult");
@@ -43,11 +43,11 @@ public class PublishVacationView extends AView implements Initializable {
         vacType.getItems().addAll("Urban","Exotic", "Other");
         vacType.setValue("Urban");
 
-        accRank.getItems().addAll(1,2,3,4,5);
-        accRank.setValue(1);
+        accRank.getItems().addAll(0,1,2,3,4,5);
+        accRank.setValue(0);
     }
 
-    public void publishVac () throws InterruptedException {
+    public void publishVac() throws InterruptedException {
         String destinationS = destination.getText();
         String accNameS = accName.getText();
         String luggWeightS = luggWeight.getText();
@@ -83,7 +83,7 @@ public class PublishVacationView extends AView implements Initializable {
         if(vacTypeS==null)
             vacTypeS="";
         int accRankS = (int) accRank.getValue();
-        if(!isDouble || destinationS.isEmpty() || accNameS.isEmpty() || luggWeightS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
+        if(!isDouble || destinationS.isEmpty() || luggWeightS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
                 dbdateS.isEmpty() || ticketTypeS.isEmpty() || vacTypeS.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
@@ -95,6 +95,10 @@ public class PublishVacationView extends AView implements Initializable {
         else{
             Vacation vacation = new Vacation(numTicketsS,publishVacationController.getUsername(),airlineS,destinationS,
                     ticketTypeS,vacTypeS,priced,stringToDate(dfdateS));
+            if(accNameS.isEmpty())//add accomidation name
+                vacation.setAccommodation(accNameS);
+            if(accRankS!=0)//add accomidation rank
+                vacation.setAccommodationRank(accRankS);
             vacation.setId(publishVacationController.addVacation(vacation));
             if(vacation.getId()!=-1){
                 Thread.sleep(500);
