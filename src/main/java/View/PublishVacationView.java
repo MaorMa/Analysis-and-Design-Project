@@ -48,11 +48,11 @@ public class PublishVacationView extends AView implements Initializable {
     }
 
     public void publishVac() throws InterruptedException {
-        String destinationS = destination.getText();
-        String accNameS = accName.getText();
+        String destinationS = destination.getText();//destination
+        String accNameS = accName.getText();//accomodation name
         String luggWeightS = luggWeight.getText();
         String airlineS = airline.getText();
-        String dfdateS, dbdateS;
+        String dfdateS, dbdateS;//date forward, date backward
         double priced=0;
         boolean isDouble;
         try {
@@ -83,7 +83,7 @@ public class PublishVacationView extends AView implements Initializable {
         if(vacTypeS==null)
             vacTypeS="";
         int accRankS = (int) accRank.getValue();
-        if(!isDouble || destinationS.isEmpty() || luggWeightS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
+        if(!isDouble || destinationS.isEmpty() || airlineS.isEmpty() || dfdateS.isEmpty() ||
                 dbdateS.isEmpty() || ticketTypeS.isEmpty() || vacTypeS.isEmpty()){
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Error");
