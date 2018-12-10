@@ -8,6 +8,6 @@ public class PublishVacationController extends AController{
     }
 
     public int addVacation(Vacation vacation){
-        return myModel.publicVac(vacation);
+        return myModel.publishVac(vacation);
     }
 }

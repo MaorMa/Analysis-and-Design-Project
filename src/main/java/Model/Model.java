@@ -66,7 +66,7 @@ public class Model {
         dBconnection.removeUser(username);
     }
 
-    public int publicVac(Vacation vacation){
+    public int publishVac(Vacation vacation){
         return dBconnection.insertVacation(vacation);
     }
 
