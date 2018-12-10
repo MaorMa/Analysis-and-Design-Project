@@ -121,7 +121,7 @@ public abstract class AView {
         }
         return null;
     }
-
+//
     public void setPurchaseNumber(Integer purchaseNumber) {
         this.purchaseNumber = purchaseNumber.intValue();
     }
