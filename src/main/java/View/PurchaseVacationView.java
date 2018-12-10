@@ -72,7 +72,6 @@ public class PurchaseVacationView extends AView implements Initializable {
     }
 
     public void purchaseVac(ActionEvent actionEvent) {
-        System.out.println(AView.purchaseNumber);
         Stage stage = (Stage) purchaseButton.getScene().getWindow();
         boolean correct = false;
         //check conditions and then set

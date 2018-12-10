@@ -104,8 +104,8 @@ public class Model {
     //
     public boolean confirmPayment(int vacationID, String buyer , String method){
         try{
-        Vacation v=dBconnection.readVacation(vacationID);
-        dBconnection.insertPayment(buyer,v,method);}
+            Payment payment = new Payment(dBconnection.readVacation(vacationID),method,buyer);
+        dBconnection.insertPayment(payment);}
         catch (Exception e){
             return false;
         }

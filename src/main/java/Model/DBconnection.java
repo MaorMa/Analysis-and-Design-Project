@@ -185,17 +185,17 @@ public class DBconnection {
         return false;
     }
 
-    public int insertPayment(String buyer, Vacation vacation, String method){
+    public int insertPayment(Payment pay){
         String insertQ = "INSERT INTO Payments(PaymentID, VacationID ,Buyer, Seller, Amount, Method) VALUES(?,?,?,?,?,?)";
         int id=getPaymentID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            System.out.println(id+", "+vacation.getId()+", "+buyer+", "+vacation.getAdvertiser()+", "+vacation.getPrice()+", "+method);
-            pstmt.setInt(1, id);
-            pstmt.setInt(2, vacation.getId());
-            pstmt.setString(3, buyer);
-            pstmt.setString(4, vacation.getAdvertiser());
-            pstmt.setDouble(5, vacation.getPrice());
-            pstmt.setString(6, method.toUpperCase());
+            System.out.println(id+", "+pay.getVacation().getId()+", "+pay.getBuyer()+", "+pay.getVacation().getAdvertiser()+", "+pay.getVacation().getPrice()+", "+pay.getMethod());
+            pstmt.setInt(1,pay.getId());
+            pstmt.setInt(2, pay.getVacation().getId());
+            pstmt.setString(3, pay.getBuyer());
+            pstmt.setString(4, pay.getVacation().getAdvertiser());
+            pstmt.setDouble(5, pay.getVacation().getPrice());
+            pstmt.setString(6, pay.getMethod().toUpperCase());
             pstmt.executeUpdate();
             //System.out.println("Insert Complete");
             return id;
