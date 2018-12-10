@@ -104,9 +104,7 @@ public class VacationLoggedInView extends AView implements Initializable {
         stage.setResizable(false);
         Thread.sleep(250);
         stage.showAndWait();
-        if(AView.publishData.size() > 0){
-            Vacation v = new Vacation(1, "2", "2", "u", "s", "adult", 125, new Date(02 / 12));
-        }
+        super.updateTableView();
     }
 
     public void searchVac(ActionEvent actionEvent) {
