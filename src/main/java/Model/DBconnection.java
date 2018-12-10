@@ -46,7 +46,7 @@ public class DBconnection {
                 paymentID=rs.getInt("VacationID");
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -201,7 +201,7 @@ public class DBconnection {
             return id;
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
             return -1;
         }
     }

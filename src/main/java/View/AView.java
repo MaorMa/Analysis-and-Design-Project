@@ -96,8 +96,9 @@ public abstract class AView {
         try {
             Integer current = (Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey();
             if(current!=null) {
-                VacationView.setOnMouseClicked(event -> setPurchaseNumber(current));
+                setPurchaseNumber(current);
             }
+
         }catch(Exception e){
 
         }
@@ -130,8 +131,8 @@ public abstract class AView {
         return null;
     }
 
-    public void setPurchaseNumber(Integer purchaseNumber) {
-        this.purchaseNumber = purchaseNumber.intValue();
+    public void setPurchaseNumber(Integer toset) {
+        this.purchaseNumber = toset;
     }
 
     public void removeFromTableView(int purchaseNumber) {

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PurchaseVacationView">
+<BorderPane stylesheets="@VacationView.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="368.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.PurchaseVacationView">
     <center>
         <GridPane maxHeight="385.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="256.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <columnConstraints>
