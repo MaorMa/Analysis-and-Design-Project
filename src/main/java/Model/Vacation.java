@@ -1,19 +1,17 @@
 package Model;
 
-import java.sql.Date;
 
 /**
  * Not created by Maor. He's just an assistant.
  */
 public class Vacation {
     int id=-1, accommodationRank, NTickets;
-    String airline, luggage, destination, ticketType, vacationType, accommodation, advertiser;
+    String airline, luggage, destination, ticketType, vacationType, accommodation, advertiser, toDestinationDeparture, returnFlightDeparture;
     double price;
-    Date toDestinationDeparture, returnFlightDeparture;
 
     public Vacation(int NTickets, String advertiser, String airline,
                     String destination, String ticketType, String vacationType,
-                    double price, Date toDestinationDeparture) {
+                    double price, String toDestinationDeparture) {
         this.NTickets = NTickets;
         this.advertiser = advertiser;
         this.airline = airline;
@@ -21,7 +19,7 @@ public class Vacation {
         this.ticketType = ticketType;
         this.vacationType = vacationType;
         this.price = price;
-        this.toDestinationDeparture = new Date(toDestinationDeparture.getYear()-1900, toDestinationDeparture.getMonth()-1, toDestinationDeparture.getDay());
+        this.toDestinationDeparture = toDestinationDeparture;
     }
 
     public int getId() {
@@ -108,19 +106,19 @@ public class Vacation {
         this.price = price;
     }
 
-    public Date getToDestinationDeparture() {
+    public String getToDestinationDeparture() {
         return toDestinationDeparture;
     }
 
-    public void setToDestinationDeparture(Date toDestinationDeparture) {
+    public void setToDestinationDeparture(String toDestinationDeparture) {
         this.toDestinationDeparture = toDestinationDeparture;
     }
 
-    public Date getReturnFlightDeparture() {
+    public String getReturnFlightDeparture() {
         return returnFlightDeparture;
     }
 
-    public void setReturnFlightDeparture(Date returnFlightDeparture) {
+    public void setReturnFlightDeparture(String returnFlightDeparture) {
         this.returnFlightDeparture = returnFlightDeparture;
     }
 }

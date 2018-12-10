@@ -4,15 +4,8 @@ package Model;
  *  Database connection class
  */
 
-import View.VacationView;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 //todo check db file
 public class DBconnection {
@@ -72,10 +65,10 @@ public class DBconnection {
                 "\t`Advertiser`\tTEXT NOT NULL,\n" +
                 "\t`Airline`\tTEXT NOT NULL,\n" +
                 "\t`Price`\tNUMERIC NOT NULL,\n" +
-                "\t`ToDestinationDeparture`\tDATE NOT NULL,\n" +
+                "\t`ToDestinationDeparture`\tTEXT NOT NULL,\n" +
                 "\t`Luggage`\tTEXT,\n" +
                 "\t`NTickets`\tNUMERIC NOT NULL,\n" +
-                "\t`ReturnFlightDeparture`\tDATE,\n" +
+                "\t`ReturnFlightDeparture`\tTEXT,\n" +
                 "\t`Destination`\tTEXT NOT NULL,\n" +
                 "\t`TicketType`\tNOT NULL CHECK (TicketType IN ('ADULT', 'CHILD', 'BABY')),\n" +
                 "\t`VacationType`\tNOT NULL CHECK (VacationType IN ('URBAN', 'EXOTIC', 'OTHER')),\n" +
@@ -221,10 +214,10 @@ public class DBconnection {
             pstmt.setString(2, vacation.getAdvertiser());
             pstmt.setString(3, vacation.getAirline());
             pstmt.setDouble(4, vacation.getPrice());
-            pstmt.setDate(5, vacation.getToDestinationDeparture());
+            pstmt.setString(5, vacation.getToDestinationDeparture());
             pstmt.setString(6, vacation.getLuggage());
             pstmt.setInt(7, vacation.getNTickets());
-            pstmt.setDate(8, vacation.getReturnFlightDeparture());
+            pstmt.setString(8, vacation.getReturnFlightDeparture());
             pstmt.setString(9, vacation.getDestination().toUpperCase());
             pstmt.setString(10, vacation.getTicketType().toUpperCase());
             pstmt.setString(11, vacation.getVacationType().toUpperCase());
@@ -247,10 +240,10 @@ public class DBconnection {
             String advertiser=resultSet.getString("Advertiser");
             String airline=resultSet.getString("Airline");
             double price=resultSet.getDouble("Price");
-            Date toDestination=resultSet.getDate("ToDestinationDeparture");
+            String toDestination=resultSet.getString("ToDestinationDeparture");
             String luggage=resultSet.getString("Luggage");
             int NTickets=resultSet.getInt("NTickets");
-            Date returnFlight=resultSet.getDate("ReturnFlightDeparture");
+            String returnFlight=resultSet.getString("ReturnFlightDeparture");
             String destination=resultSet.getString("Destination");
             String ticketType=resultSet.getString("TicketType");
             String vacationType= resultSet.getString("VacationType");
@@ -259,7 +252,7 @@ public class DBconnection {
             Vacation vacation=new Vacation(NTickets, advertiser, airline, destination, ticketType, vacationType, price, toDestination);
             vacation.setId(resultSet.getInt("VacationID"));
             vacation.setLuggage(luggage);
-            vacation.setReturnFlightDeparture(returnFlight);
+            vacation.setToDestinationDeparture(resultSet.getString("ToDestinationDeparture"));
             vacation.setAccommodation(accommodation);
             vacation.setAccommodationRank(accommodationRank);
             //System.out.println("Insert Complete");
@@ -280,20 +273,20 @@ public class DBconnection {
                 String advertiser = resultSet.getString("Advertiser");
                 String airline = resultSet.getString("Airline");
                 double price = resultSet.getDouble("Price");
-                Date toDestination = resultSet.getDate("ToDestinationDeparture");
+                String toDestination = resultSet.getString("ToDestinationDeparture");
                 String luggage = resultSet.getString("Luggage");
                 int NTickets = resultSet.getInt("NTickets");
-                Date returnFlight = resultSet.getDate("ReturnFlightDeparture");
+                String returnFlight = resultSet.getString("ReturnFlightDeparture");
                 String destination = resultSet.getString("Destination");
                 String ticketType = resultSet.getString("TicketType");
                 String vacationType = resultSet.getString("VacationType");
                 String accommodation = resultSet.getString("Accommodation");
                 int accommodationRank = resultSet.getInt("AccommodationRank");
                 Vacation vacation = new Vacation(NTickets, advertiser, airline, destination,
-                        ticketType, vacationType, price, toDestination);
+                        ticketType, vacationType, price, resultSet.getString("ToDestinationDeparture"));
                 vacation.setId(id);
                 vacation.setLuggage(luggage);
-                vacation.setReturnFlightDeparture(returnFlight);
+                vacation.setReturnFlightDeparture("ReturnFlightDeparture");
                 vacation.setAccommodation(accommodation);
                 vacation.setAccommodationRank(accommodationRank);
                 ans.put(id, vacation);
@@ -327,24 +320,20 @@ public class DBconnection {
     }
 
     public static void main(String[] args) {
-        /*try {
+        try {
             DBconnection db = new DBconnection();
             User buyer = new User("aviv", "1", "04/11/1990", "a", "a", "ofakim"),
                     seller = new User("maor", "elba", "09/01/1993", "maor", "ma", "beer sheva");
             db.insertUser(buyer);
             db.insertUser(seller);
-            Vacation v = new Vacation(-1, 3, seller, "pegasus", "romania", "adult", "urban", 150, new Date(2018, 12, 10));
-            Vacation v1 = new Vacation(-1, 3, seller, "Elal", "romania", "baby", "urban", 150, new Date(2018, 12, 10));
-            Vacation v2 = new Vacation(-1, 3, seller, "arkia", "romania", "child", "exotic", 150, new Date(2018, 12, 10));
+            java.util.Date d=new java.util.Date(1990, 12, 20);
+            System.out.println(d);
+            Vacation v=new Vacation(3, "aviv", "elal", "bangkok", "adult", "urban", 1234, "11/01/2020");
+            System.out.println(v.getToDestinationDeparture());
             db.insertVacation(v);
-            db.insertVacation(v1);
-            db.insertVacation(v2);
-            HashMap<Integer, Vacation> list = db.readVacations();
-            for(Integer x:list.keySet())
-                System.out.println(x+","+list.get(x).getAdvertiser()+","+list.get(x).getAirline());
-            //System.out.println(db.insertPayment(buyer, db.readVacation(1), "visa"));
+
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
     }
 }

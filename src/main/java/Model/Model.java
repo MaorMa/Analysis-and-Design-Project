@@ -2,6 +2,7 @@ package Model;
 
 import javafx.scene.control.*;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -94,7 +95,15 @@ public class Model {
     }
 
     public HashMap<Integer, Vacation> getVacations() {
-        return null;
-//        return this.dBconnection.readVacations();
+        return this.dBconnection.readVacations();
+    }
+
+    public void removeVacations(int id){
+        dBconnection.removeVacation(id);
+    }
+
+    public boolean confirmPayment(int vacationID, String buyer){
+
+        return false;
     }
 }
