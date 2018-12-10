@@ -309,6 +309,7 @@ public class DBconnection {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        updateVacationID();
     }
 
     private int getPaymentID(){
@@ -331,6 +332,11 @@ public class DBconnection {
             Vacation v=new Vacation(3, "aviv", "elal", "bangkok", "adult", "urban", 1234, "11/01/2020");
             System.out.println(v.getToDestinationDeparture());
             db.insertVacation(v);
+
+            Vacation vv=new Vacation(14, "dan", "United", "Paris", "child", "urban", 189.8, "29/01/2018");
+            db.insertVacation(vv);
+
+
 
         }catch (Exception e){
             e.printStackTrace();

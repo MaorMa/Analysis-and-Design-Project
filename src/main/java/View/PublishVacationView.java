@@ -94,7 +94,7 @@ public class PublishVacationView extends AView implements Initializable {
         }
         else{
             Vacation vacation = new Vacation(numTicketsS,publishVacationController.getUsername(),airlineS,destinationS,
-                    ticketTypeS,vacTypeS,priced,stringToDate(dfdateS));
+                    ticketTypeS,vacTypeS,priced,dfdateS);
             if(accNameS.isEmpty())//add accomidation name
                 vacation.setAccommodation(accNameS);
             if(accRankS!=0)//add accomidation rank
