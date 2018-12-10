@@ -1,12 +1,15 @@
 package View;
 
+import Controller.PurchaseVacationController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 /**
@@ -27,6 +30,7 @@ public class PurchaseVacationView extends AView implements Initializable {
     public javafx.scene.control.Label pwLabel;
     public javafx.scene.control.Label ccvLabel;
 
+    public PurchaseVacationController purchaseVacationController = new PurchaseVacationController();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         cardType.getItems().addAll("Visa","PayPal");
@@ -70,12 +74,109 @@ public class PurchaseVacationView extends AView implements Initializable {
     public void purchaseVac(ActionEvent actionEvent) {
         System.out.println(AView.purchaseNumber);
         Stage stage = (Stage) purchaseButton.getScene().getWindow();
+        boolean correct = false;
         //check conditions and then set
-        AView.PaymentApprovement = true;
-        stage.close();
+        if(cardType.getValue().equals("Visa")){
+            correct = checkVisa();
+        }
+        else{
+            correct = checkPP();
+        }
+        if(correct) {
+            purchaseVacationController.confirmPayment(AView.purchaseNumber,purchaseVacationController.getUsername(),cardType.getValue().toString());
+            AView.PaymentApprovement = true;
+            stage.close();
+        }
     }
 
-    public void changeInfoReq(MouseEvent mouseEvent) {
-        System.out.println("relesed");
+    //paypal
+    private boolean checkPP() {
+        String email = emailValue.getText();
+        String pw = pwValue.getText();
+        if(!email.isEmpty() && email.contains("@") && email.contains(".")){
+            if(!pw.isEmpty()){
+                return true;
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Wrong Password");
+                alert.setHeaderText("The password that you've entered is empty");
+                alert.setContentText("Enter a valid non-empty password");
+
+                alert.showAndWait();
+            }
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Wrong E-mail");
+            alert.setHeaderText("The email that you've entered is wrong");
+            alert.setContentText("Enter a valid email, like this: xxxx@yyyy.zzz");
+
+            alert.showAndWait();
+        }
+        return false;
     }
+
+    //visa
+    private boolean checkVisa() {
+        String card = cardNumberValue.getText();
+        String ccv = CCVvalue.getText();
+        if(!card.isEmpty()) {
+            try{
+                Integer.parseInt(card);
+            }catch(Exception e){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Bad Card Number");
+                alert.setHeaderText("The card number that you've entered is bad");
+                alert.setContentText("Enter a valid card number, made up from only numbers");
+
+                alert.showAndWait();
+                return false;
+            }
+            if(!ccv.isEmpty()){
+                try{
+                    Integer.parseInt(ccv);
+                }catch(Exception e){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Bad CCV Number");
+                    alert.setHeaderText("The CCV number that you've entered is bad");
+                    alert.setContentText("Enter a valid CCV number, made up from only numbers");
+
+                    alert.showAndWait();
+                    return false;
+                }
+                if(expDateValue.getValue() != null)//check if date is null
+                {
+                    return true;
+                }
+                else{
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("No Expiration date Number");
+                    alert.setHeaderText("You havn't entered Expiration date");
+                    alert.setContentText("Enter a valid Expiration date");
+
+                    alert.showAndWait();
+                    return false;
+                }
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("No CCV Number");
+                alert.setHeaderText("The CCV number that you've entered is empty");
+                alert.setContentText("Enter a valid CCV number, made up from only numbers");
+
+                alert.showAndWait();
+                return false;
+            }
+
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("No Card Number");
+            alert.setHeaderText("The card number that you've entered is empty");
+            alert.setContentText("Enter a valid card number, made up from only numbers");
+
+            alert.showAndWait();
+            return false;
+        }
+    }
+
 }

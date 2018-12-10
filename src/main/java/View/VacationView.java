@@ -73,25 +73,33 @@ public class VacationView extends AView implements Initializable {
         if(AController.getCurrentUser()==null)
             loginPrompt();
         else{
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/PurchaseVacation.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 1200, 600);
-                scenes.put("Purchase", scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Stage stage = new Stage();
-            stage.setTitle("Purchase Vacation");
-            stage.setScene(scene);
-            stage.setResizable(false);
-            Thread.sleep(250);
-            stage.showAndWait();
-            if(AView.PaymentApprovement){
-                super.detectClickAndSet();
-                super.removeFromTableView(AView.purchaseNumber);
-                super.updateTableView();
+            super.detectClickAndSet();
+            if(AView.purchaseNumber==-1){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("No Vacation picked");
+                alert.setHeaderText("Please choose one of the vacations to proceed");
+
+                alert.showAndWait();
+            }else {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/PurchaseVacation.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 1200, 600);
+                    scenes.put("Purchase", scene);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage stage = new Stage();
+                stage.setTitle("Purchase Vacation");
+                stage.setScene(scene);
+                stage.setResizable(false);
+                Thread.sleep(250);
+                stage.showAndWait();
+                if (AView.PaymentApprovement) {
+                    super.removeFromTableView(AView.purchaseNumber);
+                    super.updateTableView();
+                }
             }
         }
     }

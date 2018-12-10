@@ -2,8 +2,7 @@ package View;
 
 import Controller.PublishVacationController;
 import Controller.VacationsController;
-import Controller.purchaseVacationController;
-import Model.DBconnection;
+import Controller.PurchaseVacationController;
 import Model.Vacation;
 import com.sun.javafx.stage.StageHelper;
 import javafx.beans.property.SimpleStringProperty;
@@ -22,13 +21,13 @@ public abstract class AView {
     protected List<Stage> stages;//  = StageHelper.getStages();//get all stages that exist
     protected static HashMap<String, Scene> scenes = new HashMap<>();//
     Stage mainStage = getStage("Vacation4U");
-    static int purchaseNumber = 0;
+    static int purchaseNumber = -1;
     static boolean PaymentApprovement = false;
     static HashMap<String,String> publishData = new HashMap<>();
     protected static HashMap<Integer, Vacation> vacationsList;
     protected PublishVacationController publishVacationController = new PublishVacationController();
     protected VacationsController vacationsController = new VacationsController();
-    protected purchaseVacationController purchaseVacationController = new purchaseVacationController();
+    protected PurchaseVacationController purchaseVacationController = new PurchaseVacationController();
 
 
     @FXML
@@ -94,10 +93,15 @@ public abstract class AView {
     }
 
     protected void detectClickAndSet(){
-        Integer current = (Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey();
-        if(current!=null) {
-            VacationView.setOnMouseClicked(event -> setPurchaseNumber(current));
+        try {
+            Integer current = (Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey();
+            if(current!=null) {
+                VacationView.setOnMouseClicked(event -> setPurchaseNumber(current));
+            }
+        }catch(Exception e){
+
         }
+
     }
 
     /**

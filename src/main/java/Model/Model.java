@@ -102,7 +102,7 @@ public class Model {
         dBconnection.removeVacation(id);
     }
     //
-    public boolean confirmPayment(int vacationID, String buyer,String method){
+    public boolean confirmPayment(int vacationID, String buyer , String method){
         try{
         Vacation v=dBconnection.readVacation(vacationID);
         dBconnection.insertPayment(buyer,v,method);}
