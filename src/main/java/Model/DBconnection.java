@@ -189,7 +189,7 @@ public class DBconnection {
         String insertQ = "INSERT INTO Payments(PaymentID, VacationID ,Buyer, Seller, Amount, Method) VALUES(?,?,?,?,?,?)";
         int id=getPaymentID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            System.out.println(id+", "+pay.getVacation().getId()+", "+pay.getBuyer()+", "+pay.getVacation().getAdvertiser()+", "+pay.getVacation().getPrice()+", "+pay.getMethod());
+//            System.out.println(id+", "+pay.getVacation().getId()+", "+pay.getBuyer()+", "+pay.getVacation().getAdvertiser()+", "+pay.getVacation().getPrice()+", "+pay.getMethod());
             pstmt.setInt(1,pay.getId());
             pstmt.setInt(2, pay.getVacation().getId());
             pstmt.setString(3, pay.getBuyer());
