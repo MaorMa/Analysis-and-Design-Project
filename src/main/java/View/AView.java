@@ -144,7 +144,8 @@ public abstract class AView {
     }
 
     public void removeFromTableView(int purchaseNumber) {
-        purchaseVacationController.removeVacation(purchaseNumber);
+        //purchaseVacationController.removeVacation(purchaseNumber);
+        vacationsList.remove(purchaseNumber);
     }
 
     public HashMap<Integer, Vacation> getVacationList() {

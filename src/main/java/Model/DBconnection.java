@@ -190,7 +190,7 @@ public class DBconnection {
         int id=getPaymentID();
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
 //            System.out.println(id+", "+pay.getVacation().getId()+", "+pay.getBuyer()+", "+pay.getVacation().getAdvertiser()+", "+pay.getVacation().getPrice()+", "+pay.getMethod());
-            pstmt.setInt(1,pay.getId());
+            pstmt.setInt(1,id);
             pstmt.setInt(2, pay.getVacation().getId());
             pstmt.setString(3, pay.getBuyer());
             pstmt.setString(4, pay.getVacation().getAdvertiser());
@@ -201,7 +201,7 @@ public class DBconnection {
             return id;
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
-//            e.printStackTrace();
+           // e.printStackTrace();
             return -1;
         }
     }
@@ -265,7 +265,7 @@ public class DBconnection {
     }
 
     public HashMap<Integer, Vacation> readVacations(){
-        String readQ = "SELECT * FROM Vacations";
+        String readQ = "SELECT * FROM Vacations V WHERE NOT EXISTS (SELECT * FROM Payments P WHERE P.VacationID=V.VacationID)";
         try (PreparedStatement pstmt = conn.prepareStatement(readQ)) {
             ResultSet resultSet=pstmt.executeQuery();
             HashMap<Integer, Vacation> ans=new HashMap<>();

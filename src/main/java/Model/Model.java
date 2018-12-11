@@ -107,6 +107,7 @@ public class Model {
             Payment payment = new Payment(dBconnection.readVacation(vacationID),method,buyer);
         dBconnection.insertPayment(payment);}
         catch (Exception e){
+            e.printStackTrace();
             return false;
         }
         return true;
