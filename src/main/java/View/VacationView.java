@@ -39,7 +39,7 @@ public class VacationView extends AView implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        super.updateTableView();
+        super.updateTableView("");
     }
 
     @FXML
@@ -98,7 +98,7 @@ public class VacationView extends AView implements Initializable {
                 stage.showAndWait();
                 if (AView.PaymentApprovement) {
                     super.removeFromTableView(AView.purchaseNumber);
-                    super.updateTableView();
+                    super.updateTableView("");
                 }
             }
         }
@@ -123,7 +123,7 @@ public class VacationView extends AView implements Initializable {
             stage.setResizable(false);
             Thread.sleep(250);
             stage.showAndWait();
-            super.updateTableView();
+            super.updateTableView("");
         }
     }
 
@@ -155,7 +155,7 @@ public class VacationView extends AView implements Initializable {
             dialog.setContentText("Destination:");
 
             Optional<String> result = dialog.showAndWait();
-//            System.out.println(result.get());
+            updateTableView(result.get());
         }
 
     public void Account(ActionEvent actionEvent) throws InterruptedException {

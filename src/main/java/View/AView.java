@@ -8,10 +8,12 @@ import com.sun.javafx.stage.StageHelper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +35,7 @@ public abstract class AView {
     @FXML
     protected javafx.scene.control.TableView VacationView = new TableView();
 
-    public TableView updateTableView() {
+    public TableView updateTableView(String filter) {
         /**
          * test
          */
@@ -79,14 +81,20 @@ public abstract class AView {
             column13.setCellValueFactory(p -> new SimpleStringProperty(p.getValue().getValue().getAccommodationRank() + ""));
 
             ObservableList<Map.Entry<Integer, Vacation>> items = FXCollections.observableArrayList(vacationsList.entrySet());
+            FilteredList<Map.Entry<Integer, Vacation>> filteredData = new FilteredList<>(items, s -> true);
+
             if (items.size() >= 0) {
                 VacationView.setItems(items.sorted());
                 VacationView.getColumns().setAll(column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13);
-                    Map.Entry current = ((Map.Entry) VacationView.getSelectionModel().getSelectedItem());
-                    if(current!=null){
-                        Integer pnumber = ((Integer)current.getKey());
-                        VacationView.setOnMouseClicked(event -> setPurchaseNumber(pnumber));
-                    }
+                //filter
+                if(filter == null || filter.equals("") || filter.length() == 0) {
+                    filteredData.setPredicate(s -> true);
+                    VacationView.setItems(filteredData);
+                }
+                else {
+                    filteredData.setPredicate(s -> s.getValue().getDestination().contains(filter));
+                    VacationView.setItems(filteredData);
+                }
             }
         }
         return VacationView;
