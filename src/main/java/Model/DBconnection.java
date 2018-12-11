@@ -43,10 +43,10 @@ public class DBconnection {
         try (Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(selectQ)){
             if(rs.next())
-                paymentID=rs.getInt("VacationID");
+                paymentID=rs.getInt("PaymentID");
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -136,6 +136,7 @@ public class DBconnection {
             //System.out.println("Update Complete");
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -147,7 +148,7 @@ public class DBconnection {
             pstmt.execute();
             //System.out.println("Delete Complete");
         } catch (SQLException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -180,7 +181,7 @@ public class DBconnection {
             }
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return false;
     }
@@ -201,7 +202,7 @@ public class DBconnection {
             return id;
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
-           // e.printStackTrace();
+           e.printStackTrace();
             return -1;
         }
     }

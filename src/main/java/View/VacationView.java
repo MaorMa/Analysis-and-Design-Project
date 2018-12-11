@@ -155,7 +155,9 @@ public class VacationView extends AView implements Initializable {
             dialog.setContentText("Destination:");
 
             Optional<String> result = dialog.showAndWait();
-            updateTableView(result.get());
+            try{
+                updateTableView(result.get());
+            }catch (Exception e){}
         }
 
     public void Account(ActionEvent actionEvent) throws InterruptedException {
