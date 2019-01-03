@@ -112,4 +112,20 @@ public class Model {
         }
         return true;
     }
+
+    public ArrayList<Trade> receiveOffers(){
+        return null;
+    }
+
+    public ArrayList<Vacation> getPublishedVacations(){
+        return null;
+    }
+
+    public void sendOffer(Trade trade){
+
+    }
+
+    public void sendResponse(boolean flag){
+
+    }
 }

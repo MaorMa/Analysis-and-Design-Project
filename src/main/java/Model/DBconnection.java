@@ -5,6 +5,7 @@ package Model;
  */
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 //todo check db file
@@ -343,5 +344,19 @@ public class DBconnection {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Trade> receiveOffers(){
+        return null;
+    }
+
+    public ArrayList<Vacation> getPublishedVacations(){
+        return null;
+    }
+
+    public void sendOffer(Trade trade){
+    }
+
+    public void sendResponse(boolean flag){
     }
 }
