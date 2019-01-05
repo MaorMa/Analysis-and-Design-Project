@@ -90,12 +90,22 @@ public class DBconnection {
                 "FOREIGN KEY(`Buyer`) REFERENCES Users(`UserName`)\n" +
                 "FOREIGN KEY(`Seller`) REFERENCES Users(`UserName`)\n" +
                 ");";
+        String createTrades="CREATE TABLE IF NOT EXISTS `Trades` (\n" +
+                "\t`OfferedVacationID`\tINTEGER NOT NULL,\n" +
+                "\t`OfferedForVacationID`\tINTEGER NOT NULL,\n" +
+                "\t`Approved`\tINTEGER NOT NULL CHECK(Approved IN ( 'Y' , 'N' )),\n" +
+                "\tFOREIGN KEY(`OfferedForVacationID`) REFERENCES `Vacations`(`VacationID`),\n" +
+                "\tPRIMARY KEY(`OfferedVacationID`,`OfferedForVacationID`),\n" +
+                "\tFOREIGN KEY(`OfferedVacationID`) REFERENCES `Vacations`(`VacationID`)\n" +
+                ");";
         try{
             PreparedStatement pstmt = conn.prepareStatement(createUseres);
             pstmt.executeUpdate();
             pstmt = conn.prepareStatement(createVacations);
             pstmt.executeUpdate();
             pstmt = conn.prepareStatement(createPayments);
+            pstmt.executeUpdate();
+            pstmt = conn.prepareStatement(createTrades);
             pstmt.executeUpdate();
             //System.out.println("UsersCreated Complete");
         } catch (SQLException e) {
@@ -203,7 +213,7 @@ public class DBconnection {
             return id;
         } catch (SQLException e) {
             //System.out.println(e.getMessage());
-           e.printStackTrace();
+            e.printStackTrace();
             return -1;
         }
     }
@@ -326,37 +336,130 @@ public class DBconnection {
     public static void main(String[] args) {
         try {
             DBconnection db = new DBconnection();
-            User buyer = new User("aviv", "1", "04/11/1990", "a", "a", "ofakim"),
-                    seller = new User("maor", "elba", "09/01/1993", "maor", "ma", "beer sheva");
-            db.insertUser(buyer);
-            db.insertUser(seller);
-            java.util.Date d=new java.util.Date(1990, 12, 20);
-            System.out.println(d);
-            Vacation v=new Vacation(3, "aviv", "elal", "bangkok", "adult", "urban", 1234, "11/01/2020");
-            System.out.println(v.getToDestinationDeparture());
-            db.insertVacation(v);
-
-            Vacation vv=new Vacation(14, "dan", "United", "Paris", "child", "urban", 189.8, "29/01/2018");
-            db.insertVacation(vv);
-
-
-
+            db.createTables();
+            for(Trade t : db.receiveOffers("aviv"))
+                System.out.println(t.vacationA.id+"  "+t.getVacationB.id);
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    public ArrayList<Trade> receiveOffers(){
-        return null;
+    /**
+     *
+     * @param userName
+     * @return
+     */
+    public ArrayList<Trade> receiveOffers(String userName){
+        String readQ = "select OfferedForVacationID, OfferedVacationID\n" +
+                "from Trades as T join \n" +
+                "(select *\n" +
+                    "\tfrom Vacations\n" +
+                    "\twhere Vacations.Advertiser=?) as V\n" +
+                "on T.OfferedForVacationID=V.VacationID";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(readQ);
+            pstmt.setString(1, userName);
+            ResultSet resultSet=pstmt.executeQuery();
+            ArrayList<Trade> ans=new ArrayList<>();
+            while(resultSet.next()) {
+                int offeredID=resultSet.getInt("OfferedVacationID");
+                int offeredForID=resultSet.getInt("OfferedForVacationID");
+                Vacation offeredVacation=readVacation(offeredID);
+                Vacation offeredForVacation=readVacation(offeredForID);
+                Trade t=new Trade();
+                t.vacationA=offeredVacation;
+                t.getVacationB=offeredForVacation;
+                ans.add(t);
+            }
+            return ans;
+        } catch (SQLException e) {
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    public ArrayList<Vacation> getPublishedVacations(){
-        return null;
+    /**
+     * Get all the vacations that a user has published and have not been sold.
+     * @param userName The user who's connected.
+     * @return A list of vacations.
+     */
+    public ArrayList<Vacation> getPublishedVacations(String userName){
+        String readQ = "SELECT * " +
+                "FROM Vacations V "+
+                "WHERE Advertiser=\'"+userName+"\'";
+        try (PreparedStatement pstmt = conn.prepareStatement(readQ)) {
+            ResultSet resultSet=pstmt.executeQuery();
+            ArrayList<Vacation> ans=new ArrayList<>();
+            while(resultSet.next()) {
+                int id=resultSet.getInt("VacationID");
+                String advertiser = resultSet.getString("Advertiser");
+                String airline = resultSet.getString("Airline");
+                double price = resultSet.getDouble("Price");
+                String toDestination = resultSet.getString("ToDestinationDeparture");
+                String luggage = resultSet.getString("Luggage");
+                int NTickets = resultSet.getInt("NTickets");
+                String returnFlight = resultSet.getString("ReturnFlightDeparture");
+                String destination = resultSet.getString("Destination");
+                String ticketType = resultSet.getString("TicketType");
+                String vacationType = resultSet.getString("VacationType");
+                String accommodation = resultSet.getString("Accommodation");
+                int accommodationRank = resultSet.getInt("AccommodationRank");
+                Vacation vacation = new Vacation(NTickets, advertiser, airline, destination,
+                        ticketType, vacationType, price, toDestination);
+                vacation.setId(id);
+                vacation.setLuggage(luggage);
+                vacation.setReturnFlightDeparture(returnFlight);
+                vacation.setAccommodation(accommodation);
+                vacation.setAccommodationRank(accommodationRank);
+                ans.add(vacation);
+            }
+            return ans;
+        } catch (SQLException e) {
+            //System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
     }
 
+    /**
+     * Insert an offer for a trade.
+     * @param trade
+     */
     public void sendOffer(Trade trade){
+        String insertQ = "INSERT INTO Trades VALUES(?,?,?)";
+        try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
+            pstmt.setInt(1, trade.vacationA.id);
+            pstmt.setInt(2, trade.getVacationB.id);
+            pstmt.setString(3, "'N'");
+            pstmt.executeUpdate();
+            //System.out.println("Insert Complete");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
+        }
     }
 
-    public void sendResponse(boolean flag){
+    /**
+     * Update seller response to a trade offer.
+     * @param flag
+     * @param trade
+     */
+    public void sendResponse(boolean flag, Trade trade){
+        String insertQ = "UPDATE Trades\n" +
+                "SET Approved=?\n" +
+                "WHERE OfferedVacationID=? AND OfferedForVacationID=?";
+        try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
+            pstmt.setInt(1, trade.vacationA.id);
+            pstmt.setInt(2, trade.getVacationB.id);
+            if(flag)
+                pstmt.setString(3, "'Y'");
+            else pstmt.setString(3, "'N'");
+            pstmt.executeUpdate();
+            //System.out.println("Insert Complete");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
+        }
     }
 }
