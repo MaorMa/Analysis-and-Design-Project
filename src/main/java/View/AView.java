@@ -15,6 +15,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,11 +89,10 @@ public abstract class AView {
                 VacationView.setItems(items.sorted());
                 VacationView.getColumns().setAll(column1, column2, column3, column4, column5, column6, column7, column8, column9, column10, column11, column12, column13);
                 //filter
-                if(filter == null || filter.equals("") || filter.length() == 0) {
+                if (filter == null || filter.equals("") || filter.length() == 0) {
                     filteredData.setPredicate(s -> true);
                     VacationView.setItems(filteredData);
-                }
-                else {
+                } else {
                     filteredData.setPredicate(s -> s.getValue().getDestination().contains(filter));
                     VacationView.setItems(filteredData);
                 }
@@ -102,13 +103,18 @@ public abstract class AView {
 
     protected void detectClickAndSet(){
         try {
-            Integer current = (Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey();
-            if(current!=null) {
-                setPurchaseNumber(current);
+            TableView.TableViewSelectionModel t = VacationView.getSelectionModel();
+            Object o = t.getSelectedItem();
+            if(o!=null) {
+                Object i = ((Map.Entry) (o)).getKey();
+                Integer current = (Integer) ((Map.Entry) VacationView.getSelectionModel().getSelectedItem()).getKey();
+                if (current != null) {
+                    setPurchaseNumber(current);
+                }
             }
 
         }catch(Exception e){
-
+            e.printStackTrace();
         }
 
     }

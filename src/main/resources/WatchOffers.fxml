@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="314.0" prefWidth="1102.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.RecieveView">
+   <children>
+      <TableView fx:id="OffersTableView" layoutX="9.0" layoutY="20.0" prefHeight="229.0" prefWidth="1087.0">
+        <columns>
+            <TableColumn prefWidth="69.99996662139893" text="VacationID" />
+            <TableColumn minWidth="0.0" prefWidth="0.0" text="Advertiser" />
+            <TableColumn prefWidth="76.00000762939453" text="Airline" />
+            <TableColumn prefWidth="50.66668701171875" text="Price" />
+            <TableColumn prefWidth="148.6667022705078" text="ToDestinationDeparture" />
+            <TableColumn prefWidth="74.00006103515625" text="Luggage" />
+            <TableColumn prefWidth="57.33331298828125" text="NTickets" />
+            <TableColumn prefWidth="140.00003051757812" text="ReturnFlightDeparture" />
+            <TableColumn prefWidth="74.0" text="Destination" />
+            <TableColumn prefWidth="68.0" text="TicketType" />
+            <TableColumn prefWidth="92.0" text="VacationType" />
+            <TableColumn prefWidth="98.666748046875" text="Accommodation" />
+            <TableColumn prefWidth="133.99993896484375" text="AccommodationRank" />
+        </columns>
+      </TableView>
+      <Button fx:id="acceptButton" layoutX="404.0" layoutY="260.0" mnemonicParsing="false" onAction="#acceptTrade" prefHeight="40.0" prefWidth="135.0" text="Accepet" />
+      <Button fx:id="declineButton" layoutX="561.0" layoutY="260.0" mnemonicParsing="false" onAction="#declineTrade" prefHeight="40.0" prefWidth="127.0" text="Decline" />
+   </children>
+</AnchorPane>

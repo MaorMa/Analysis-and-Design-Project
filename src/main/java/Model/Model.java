@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Maor on 10/24/2018.
@@ -113,19 +114,27 @@ public class Model {
         return true;
     }
 
-    public ArrayList<Trade> receiveOffers(){
-        return null;
+    public Vacation readVacation(int id){
+        return dBconnection.readVacation(id);
     }
 
-    public ArrayList<Vacation> getPublishedVacations(){
-        return null;
+    public ArrayList<Trade> receiveOffers(){
+        return dBconnection.receiveOffers(getCurrentuser());
+    }
+
+    public ArrayList<Vacation> getPublishedVacations(int choosen){
+        return dBconnection.getPublishedVacations(getCurrentuser(), choosen);
     }
 
     public void sendOffer(Trade trade){
-
+        dBconnection.sendOffer(trade);
     }
 
-    public void sendResponse(boolean flag){
+    public void sendResponse(int offered, int offeredFor, boolean flag){
+        dBconnection.sendResponse(flag, offeredFor, offered);
+    }
 
+    public Map<Trade,Boolean> getTradesUpdate(String current_user) {
+        return dBconnection.tradesUpdate(current_user);
     }
 }

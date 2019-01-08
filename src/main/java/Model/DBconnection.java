@@ -7,6 +7,7 @@ package Model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 //todo check db file
 public class DBconnection {
@@ -76,7 +77,7 @@ public class DBconnection {
                 "\t`Accommodation`\tTEXT,\n" +
                 "\t`AccommodationRank`\tNUMERIC,\n" +
                 "\tPRIMARY KEY(`VacationID`), " +
-                "FOREIGN KEY(`Advertiser`) REFERENCES Users(`UserName`)\n" +
+                "FOREIGN KEY(`Advertiser`) REFERENCES Users(`UserName`) ON DELETE CASCADE\n" +
                 ");";
         String createPayments="CREATE TABLE IF NOT EXISTS `Payments` (\n" +
                 "\t`PaymentID`\tNUMERIC NOT NULL,\n" +
@@ -86,17 +87,17 @@ public class DBconnection {
                 "\t`Amount`\tNUMERIC NOT NULL,\n" +
                 "\t`Method`\tNOT NULL CHECK (Method IN ('PAYPAL', 'VISA')),\n" +
                 "\tPRIMARY KEY(`PaymentID`),\n " +
-                "FOREIGN KEY(`VacationID`) REFERENCES Vacations(`VacationID`)\n" +
-                "FOREIGN KEY(`Buyer`) REFERENCES Users(`UserName`)\n" +
-                "FOREIGN KEY(`Seller`) REFERENCES Users(`UserName`)\n" +
+                "FOREIGN KEY(`VacationID`) REFERENCES Vacations(`VacationID`) ON DELETE CASCADE\n" +
+                "FOREIGN KEY(`Buyer`) REFERENCES Users(`UserName`) ON DELETE CASCADE\n" +
+                "FOREIGN KEY(`Seller`) REFERENCES Users(`UserName`) ON DELETE CASCADE\n" +
                 ");";
         String createTrades="CREATE TABLE IF NOT EXISTS `Trades` (\n" +
                 "\t`OfferedVacationID`\tINTEGER NOT NULL,\n" +
                 "\t`OfferedForVacationID`\tINTEGER NOT NULL,\n" +
-                "\t`Approved`\tINTEGER NOT NULL CHECK(Approved IN ( 'Y' , 'N' )),\n" +
-                "\tFOREIGN KEY(`OfferedForVacationID`) REFERENCES `Vacations`(`VacationID`),\n" +
+                "\t`Approved`\tTEXT NOT NULL CHECK(Approved IN ( 'Y' , 'N' , 'Unknown')),\n" +
+                "\tFOREIGN KEY(`OfferedForVacationID`) REFERENCES `Vacations`(`VacationID`) ON DELETE CASCADE,\n" +
                 "\tPRIMARY KEY(`OfferedVacationID`,`OfferedForVacationID`),\n" +
-                "\tFOREIGN KEY(`OfferedVacationID`) REFERENCES `Vacations`(`VacationID`)\n" +
+                "\tFOREIGN KEY(`OfferedVacationID`) REFERENCES `Vacations`(`VacationID`) ON DELETE CASCADE\n" +
                 ");";
         try{
             PreparedStatement pstmt = conn.prepareStatement(createUseres);
@@ -338,7 +339,7 @@ public class DBconnection {
             DBconnection db = new DBconnection();
             db.createTables();
             for(Trade t : db.receiveOffers("aviv"))
-                System.out.println(t.vacationA.id+"  "+t.getVacationB.id);
+                System.out.println(t.offerForId.id+"  "+t.offerId.id);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -351,14 +352,16 @@ public class DBconnection {
      */
     public ArrayList<Trade> receiveOffers(String userName){
         String readQ = "select OfferedForVacationID, OfferedVacationID\n" +
-                "from Trades as T join \n" +
-                "(select *\n" +
-                    "\tfrom Vacations\n" +
-                    "\twhere Vacations.Advertiser=?) as V\n" +
-                "on T.OfferedForVacationID=V.VacationID";
+                "from Trades as T join\n" +
+                "                (select Vacations.VacationID\n" +
+                "                    from Vacations\n" +
+                "                    where Vacations.Advertiser=?) as V\n" +
+                "on T.OfferedForVacationID=V.VacationID " +
+                "Where T.Approved=?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(readQ);
-            pstmt.setString(1, userName);
+            pstmt.setString(1, ""+userName+"");
+            pstmt.setString(2, "Unknown");
             ResultSet resultSet=pstmt.executeQuery();
             ArrayList<Trade> ans=new ArrayList<>();
             while(resultSet.next()) {
@@ -366,9 +369,7 @@ public class DBconnection {
                 int offeredForID=resultSet.getInt("OfferedForVacationID");
                 Vacation offeredVacation=readVacation(offeredID);
                 Vacation offeredForVacation=readVacation(offeredForID);
-                Trade t=new Trade();
-                t.vacationA=offeredVacation;
-                t.getVacationB=offeredForVacation;
+                Trade t=new Trade(offeredVacation,offeredForVacation);
                 ans.add(t);
             }
             return ans;
@@ -384,11 +385,16 @@ public class DBconnection {
      * @param userName The user who's connected.
      * @return A list of vacations.
      */
-    public ArrayList<Vacation> getPublishedVacations(String userName){
-        String readQ = "SELECT * " +
-                "FROM Vacations V "+
-                "WHERE Advertiser=\'"+userName+"\'";
-        try (PreparedStatement pstmt = conn.prepareStatement(readQ)) {
+    public ArrayList<Vacation> getPublishedVacations(String userName, int choosenVacationID){
+        String readQ = "select *\n" +
+                "from Vacations as V\n" +
+                "where V.Advertiser=? and V.VacationID NOT IN (select Trades.OfferedVacationID\n" +
+                                                                "from Trades\n" +
+                                                                "where Trades.OfferedForVacationID=?)";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(readQ);
+            pstmt.setString(1, userName);
+            pstmt.setInt(2, choosenVacationID);
             ResultSet resultSet=pstmt.executeQuery();
             ArrayList<Vacation> ans=new ArrayList<>();
             while(resultSet.next()) {
@@ -429,9 +435,9 @@ public class DBconnection {
     public void sendOffer(Trade trade){
         String insertQ = "INSERT INTO Trades VALUES(?,?,?)";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            pstmt.setInt(1, trade.vacationA.id);
-            pstmt.setInt(2, trade.getVacationB.id);
-            pstmt.setString(3, "'N'");
+            pstmt.setInt(1, trade.offerForId.id);
+            pstmt.setInt(2, trade.offerId.id);
+            pstmt.setString(3, "Unknown");
             pstmt.executeUpdate();
             //System.out.println("Insert Complete");
         } catch (SQLException e) {
@@ -443,18 +449,40 @@ public class DBconnection {
     /**
      * Update seller response to a trade offer.
      * @param flag
-     * @param trade
      */
-    public void sendResponse(boolean flag, Trade trade){
+    public void sendResponse(boolean flag, int offeredFor, int offered){
         String insertQ = "UPDATE Trades\n" +
                 "SET Approved=?\n" +
                 "WHERE OfferedVacationID=? AND OfferedForVacationID=?";
         try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
-            pstmt.setInt(1, trade.vacationA.id);
-            pstmt.setInt(2, trade.getVacationB.id);
-            if(flag)
-                pstmt.setString(3, "'Y'");
-            else pstmt.setString(3, "'N'");
+            if(flag) {
+                pstmt.setString(1, "Y");
+            }
+            else pstmt.setString(1, "N");
+            pstmt.setInt(3, offered);
+            pstmt.setInt(2, offeredFor);
+            pstmt.executeUpdate();
+            //System.out.println("Insert Complete");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //System.out.println(e.getMessage());
+            return;
+        }
+        if(flag){
+            String offerer=readVacation(offered).advertiser,
+                    gotOffer=readVacation(offeredFor).advertiser;
+            updateVacationTransfer(offered, gotOffer);
+            updateVacationTransfer(offeredFor, offerer);
+        }
+    }
+
+    private void updateVacationTransfer(int vacation, String user){
+        String insertQ = "UPDATE Vacations\n" +
+                "SET Advertiser=?\n" +
+                "WHERE VacationID=?";
+        try (PreparedStatement pstmt = conn.prepareStatement(insertQ)) {
+            pstmt.setInt(2, vacation);
+            pstmt.setString(1, user);
             pstmt.executeUpdate();
             //System.out.println("Insert Complete");
         } catch (SQLException e) {
@@ -462,4 +490,95 @@ public class DBconnection {
             //System.out.println(e.getMessage());
         }
     }
+
+    public Map<Trade, Boolean> tradesUpdate(String username){
+        HashMap<Trade, Boolean> ans=new HashMap<Trade, Boolean>();
+        ans.putAll(acceptUpdate(username));
+        ans.putAll(declineUpdate(username));
+        return ans;
+    }
+
+    public Map<Trade, Boolean> acceptUpdate(String username){
+        String readQ = "select T.OfferedVacationID, T.OfferedForVacationID, T.Approved\n" +
+                "from Vacations as V join (select *\n" +
+                "                           from Trades\n" +
+                                            "where Trades.Approved=\"Y\") as T\n" +
+                "on V.VacationID=T.OfferedForVacationID\n" +
+                "where V.Advertiser=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(readQ);
+            pstmt.setString(1, username);
+            ResultSet resultSet=pstmt.executeQuery();
+            Map<Trade, Boolean> ans=new HashMap<Trade, Boolean>();
+            ArrayList<int[]> toRemove=new ArrayList<>();
+            while(resultSet.next()) {
+                int offeredID=resultSet.getInt("OfferedVacationID");
+                int offeredForID=resultSet.getInt("OfferedForVacationID");
+                int[] vacs=new int[2];
+                vacs[0]=offeredID;
+                vacs[1]=offeredForID;
+                toRemove.add(vacs);
+                String approved=resultSet.getString("Approved");
+                Vacation offeredVacation=readVacation(offeredID);
+                Vacation offeredForVacation=readVacation(offeredForID);
+                Trade t=new Trade(offeredVacation,offeredForVacation);
+                ans.put(t, approved.equals("Y"));
+            }
+            removeUpdatedTrades(toRemove);
+            return ans;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public Map<Trade, Boolean> declineUpdate(String username){
+        String readQ = "select T.OfferedVacationID, T.OfferedForVacationID, T.Approved\n" +
+                "from Vacations as V join (select *\n" +
+                                            "from Trades\n" +
+                                           "where  Trades.Approved=\"N\") as T\n" +
+                "on V.VacationID=T.OfferedVacationID\n" +
+                "where V.Advertiser=?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(readQ);
+            pstmt.setString(1, username);
+            ResultSet resultSet=pstmt.executeQuery();
+            Map<Trade, Boolean> ans=new HashMap<Trade, Boolean>();
+            ArrayList<int[]> toRemove=new ArrayList<>();
+            while(resultSet.next()) {
+                int offeredID=resultSet.getInt("OfferedVacationID");
+                int offeredForID=resultSet.getInt("OfferedForVacationID");
+                int[] vacs=new int[2];
+                vacs[0]=offeredID;
+                vacs[1]=offeredForID;
+                toRemove.add(vacs);
+                String approved=resultSet.getString("Approved");
+                Vacation offeredVacation=readVacation(offeredID);
+                Vacation offeredForVacation=readVacation(offeredForID);
+                Trade t=new Trade(offeredVacation,offeredForVacation);
+                ans.put(t, !approved.equals("N"));
+            }
+            removeUpdatedTrades(toRemove);
+            return ans;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void removeUpdatedTrades(ArrayList<int[]> toRemove){
+        String removeQ = "DELETE FROM Trades\n" +
+                "WHERE OfferedVacationID=? and OfferedForVacationID=?;";
+        try {
+            for(int[] i : toRemove) {
+                PreparedStatement pstmt = conn.prepareStatement(removeQ);
+                pstmt.setInt(1, i[0]);
+                pstmt.setInt(2, i[1]);
+                pstmt.executeUpdate();
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package View;
 
 import Controller.AController;
 import Controller.VacationsController;
+import Model.Trade;
 import Model.User;
 import Model.Vacation;
 import javafx.event.ActionEvent;
@@ -12,11 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -32,6 +35,9 @@ public class VacationView extends AView implements Initializable {
     public javafx.scene.control.Button accountButton;
     public javafx.scene.control.Button LogoutButton;
     public javafx.scene.control.Label currentuser;
+    public javafx.scene.control.Button offerTradeButton;
+    public javafx.scene.control.Button watchOffersButton;
+
 
     public void setTitle() {
         currentuser.setText("Hello " + AController.getCurrentUser());
@@ -40,6 +46,8 @@ public class VacationView extends AView implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         super.updateTableView("");
+        offerTradeButton.setDisable(true);
+        watchOffersButton.setDisable(true);
     }
 
     @FXML
@@ -66,6 +74,31 @@ public class VacationView extends AView implements Initializable {
             LogoutButton.setDisable(false);
             loginButton.setDisable(true);
             setTitle();
+            offerTradeButton.setDisable(false);
+            if(vacationsController.checkOffers()){
+                watchOffersButton.setDisable(false);
+            }
+
+            Map<Trade,Boolean> TradesUpdate = vacationsController.getTradesUpdate(AController.getCurrentUser());
+            for(Map.Entry entry:TradesUpdate.entrySet()){
+                Vacation offerId = ((Trade)entry.getKey()).offerId;
+                String offerd_id = "Vaction ID : " + offerId.getId() + " From: " + offerId.getAdvertiser();
+                Vacation offerForId = ((Trade)entry.getKey()).offerForId;
+                String offer_ForId = "Vaction ID : " + offerForId.getId() + " From: " + offerForId.getAdvertiser();
+                if((Boolean)entry.getValue()){
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Approved");
+                    alert.setHeaderText(offerd_id);
+                    alert.setHeaderText(offer_ForId);
+                    alert.showAndWait();
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Denied");
+                    alert.setHeaderText(offerd_id);
+                    alert.setHeaderText(offer_ForId);
+                    alert.showAndWait();
+                }
+            }
         }
     }
 
@@ -189,5 +222,61 @@ public class VacationView extends AView implements Initializable {
         accountButton.setDisable(true);
         LogoutButton.setDisable(true);
         loginButton.setDisable(false);
+        watchOffersButton.setDisable(true);
+        offerTradeButton.setDisable(true);
+    }
+
+    public void offerTrade() {
+        super.detectClickAndSet();
+        if(AView.purchaseNumber==-1) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Vacation picked");
+            alert.setHeaderText("Please choose one of the vacations to proceed");
+            alert.showAndWait();
+            return;
+        }
+        OfferView.id = AView.purchaseNumber;
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/OfferTrade.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1200, 600);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.setTitle("Watch Offers");
+        stage.setScene(scene);
+        stages.add(stage);
+        stage.setResizable(false);
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        stage.showAndWait();
+//        super.updateTableView("");
+    }
+
+    public void watchOffers() {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/WatchOffers.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 1200, 600);
+//            scenes.put("Publish", scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.setTitle("Watch Offers");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        try {
+            Thread.sleep(250);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        stage.showAndWait();
     }
 }
